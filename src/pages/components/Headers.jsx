@@ -50,7 +50,7 @@ const Example = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
+          <NavbarText>HEADER</NavbarText>
         </Collapse>
       </Navbar>
     </div>
