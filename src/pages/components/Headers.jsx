@@ -20,6 +20,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 const Example = (props) => {
   const useStyles = makeStyles((theme) => ({
     margin: {
@@ -31,14 +33,14 @@ const Example = (props) => {
   const toggle = () => setIsOpen(!isOpen);
   const classes = useStyles();
   return (
-    <div class='Head'>
+    <div class='Head' style={{zIndex: 1090 }}>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">Testing</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href='/menu'>Menu</NavLink>
+              <NavLink href='/product'>MED</NavLink>
             </NavItem>
             
             <UncontrolledDropdown nav inNavbar>
@@ -59,9 +61,7 @@ const Example = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <div>
-            ARAta
-          </div>
+          <Button style={{marginRight:100}}>NAMEHERE</Button>
           <FormControl className={classes.margin}>
         <InputLabel htmlFor="input-with-icon-adornment">Search</InputLabel>
         <Input
@@ -73,9 +73,9 @@ const Example = (props) => {
           }
         />
       </FormControl>
-          <div style={{marginLeft:10}}>Login</div>
-          <div style={{marginLeft:10}}>Register</div>
-          <NavbarText style={{marginLeft:10}}>HEADER</NavbarText>
+          <Button style={{marginLeft:10}}>Login</Button>
+          <Button style={{marginLeft:10}}>Register</Button>
+         
         </Collapse>
       </Navbar>
     </div>
