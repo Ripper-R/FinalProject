@@ -1,11 +1,11 @@
 import Login from './pages/login'
-import Header from './components/Headers'
+import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import {Switch,Route} from 'react-router-dom'
 function App() {
   return (
     <>
-   <Header/>
+   <Navbar/>
    <Switch>
    <Route exact path='/' component={Home}/>
    <Route exact path='/Login' component={Login}/>
