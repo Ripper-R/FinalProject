@@ -8,6 +8,10 @@ import LockIcon from '@material-ui/icons/Lock';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { GolfCourse } from '@material-ui/icons';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import Button from '@material-ui/core/Button';
 const LoginScreen=()=>{
     const [values, setValues] = React.useState({
         password:'',
@@ -64,6 +68,9 @@ const LoginScreen=()=>{
                             }
                         />
                 </FormControl>
+                <Button style={{marginTop:20}} variant='contained' color='primary'>
+                    <FacebookIcon/>Sign in with Facebook
+                </Button>
 
             </div>
             
