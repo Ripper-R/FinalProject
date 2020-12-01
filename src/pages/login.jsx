@@ -68,6 +68,9 @@ const LoginScreen=()=>{
                             }
                         />
                 </FormControl>
+                <Button variant='contained' style={{width:'50%',marginLeft:130,marginTop:20}}>
+                    Login
+                </Button>
                 <Button style={{marginTop:20}} variant='contained' color='primary'>
                     <FacebookIcon/>Sign in with Facebook
                 </Button>
