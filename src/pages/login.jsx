@@ -12,6 +12,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { GolfCourse } from '@material-ui/icons';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Button from '@material-ui/core/Button';
+import Footer from './../components/Footer'
 const LoginScreen=()=>{
     const [values, setValues] = React.useState({
         password:'',
@@ -77,7 +78,7 @@ const LoginScreen=()=>{
 
             </div>
             
-            
+          
         </div>
     )
 

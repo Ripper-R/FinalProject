@@ -31,8 +31,8 @@ const RegisterSc=()=>{
     
     
     return(
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',borderWidth:'5px',borderStyle:'solid',marginTop:100}}>
-            <div style={{marginTop:100,flexDirection:'column',display:'flex',borderWidth:'5px',borderStyle:'solid',height:300,padding:30}}>
+        <div style={{display:'flex',justifyContent:'center',width:'100%',padding:20}}>
+            <div style={{marginTop:100,flexDirection:'column',display:'flex',height:300,padding:30}}>
                 <FormControl >
                     <InputLabel htmlFor="input-with-icon-adornment">Username</InputLabel>
                     <Input
@@ -89,7 +89,7 @@ const RegisterSc=()=>{
                 
                 
                 <Button style={{marginTop:20}} variant='contained' color='primary'>
-                    <FacebookIcon/>Sign in with Facebook
+                    <FacebookIcon/>&nbsp; Sign in with Facebook
                 </Button>
 
             </div>

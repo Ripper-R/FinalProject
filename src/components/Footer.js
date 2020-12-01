@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "./footer.css";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 
@@ -29,7 +29,7 @@ function Footer() {
         <div className="footer-link-wrapper">
           <div class="footer-link-items">
             <h2>About Us</h2>
-            <Link to="/sign-up">Testimonials</Link>
+            <Link to="/Register">Testimonials</Link>
             <Link to="/">Awards</Link>
             <Link to="/">Investors</Link>
             <Link to="/">Terms of Service</Link>
