@@ -1,20 +1,42 @@
 import React from 'react';
 import {products} from './Productdummy'
-const product=()=>{
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+
+  const product=()=>{
     
     const getproduct=(product,index)=>{
         return(
-            <div key={index} style={{flexBasis:'50%'}}>
-                <h2>{product.name}</h2>
-                <p>{product.details}</p>
-                <p>{product.price}</p>
-            </div>
+            <Card style={{flexBasis:'18%',marginTop:10,marginRight:5}} >
+            <CardContent>
+              <Typography  color="textSecondary" gutterBottom>
+                GAMBAR
+              </Typography>
+              <Typography variant="h5" component="h2">
+                {product.name}
+              </Typography>
+              <Typography  color="textSecondary">
+                {product.price}
+              </Typography>
+              <Typography variant="body2" component="p">
+                {product.details}
+               
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">To details</Button>
+            </CardActions>
+          </Card>
         )
     }
     
     return(
-        <div style={{width:1280,height:500,borderwidth:'5px',borderstyle:'solid'}}>
-            <div style={{flexWrap:'wrap',display:'flex',padding:20}}>
+        <div style={{width:1366,height:700,borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray'}}>
+            <div style={{flexWrap:'wrap',display:'flex',padding:20,justifyContent:'space-evenly'}}>
               {
                   products.map((product, index) => {
                     return getproduct(product, index)
