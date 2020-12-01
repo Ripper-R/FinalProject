@@ -2,6 +2,7 @@ import Login from './pages/login'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import {Switch,Route} from 'react-router-dom'
+import './App.css'
 function App() {
   return (
     <>
