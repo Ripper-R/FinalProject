@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { register } from "../components/RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+import FacebookIcon from '@material-ui/icons/Facebook';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -168,6 +168,10 @@ class Registration extends Component {
                 }
               />
             </FormControl>
+            <Button style={{marginTop:20}} variant='contained' color='primary'>
+              <FacebookIcon/>Sign in with Facebook
+          </Button>
+
             <Button
               disabled={!this.isValid()}
               disableRipple
@@ -180,7 +184,6 @@ class Registration extends Component {
               Join
             </Button>
           </form>
-
           {this.state.error ? (
             <Snackbar
               variant="error"

@@ -35,7 +35,7 @@ import Typography from '@material-ui/core/Typography';
     }
     
     return(
-        <div style={{width:1366,height:700,borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray'}}>
+        <div style={{width:'100%',height:'100%',borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray'}}>
             <div style={{flexWrap:'wrap',display:'flex',padding:20,justifyContent:'space-evenly'}}>
               {
                   products.map((product, index) => {
