@@ -1,12 +1,13 @@
 import Login from './pages/login'
-import Header from './components/Headers'
+import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Register from './pages/register'
 import {Switch,Route} from 'react-router-dom'
+import './App.css'
 function App() {
   return (
     <>
-   <Header/>
+   <Navbar/>
    <Switch>
    <Route exact path='/' component={Home}/>
    <Route exact path='/Login' component={Login}/>
