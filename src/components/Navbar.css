@@ -13,6 +13,13 @@
   top: 0;
   z-index: 999;
 }
+/* .navbar.active {
+  background: linear-gradient(
+    90deg,
+    rgb(92, 166, 226) 0%,
+    rgb(44, 44, 49) 100%
+  );
+} */
 
 .navbar-container {
   display: flex;
