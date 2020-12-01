@@ -168,9 +168,7 @@ class Registration extends Component {
                 }
               />
             </FormControl>
-            <Button style={{marginTop:20}} variant='contained' color='primary'>
-              <FacebookIcon/>Sign in with Facebook
-          </Button>
+            
 
             <Button
               disabled={!this.isValid()}
@@ -184,6 +182,9 @@ class Registration extends Component {
               Join
             </Button>
           </form>
+          <Button style={{marginTop:20}} variant='contained' color='primary'>
+              <FacebookIcon/>Sign in with Facebook
+          </Button>
           {this.state.error ? (
             <Snackbar
               variant="error"
