@@ -200,9 +200,9 @@ class Registration extends Component {
               Already Sign-Up? Login <Link to="/login"> Here </Link>
             </div>
           </form>
-          <Button style={{marginTop:20}} variant='contained' color='primary'>
+          {/* <Button style={{marginTop:20}} variant='contained' color='primary'>
               <FacebookIcon/>Sign in with Facebook
-          </Button>
+          </Button> */}
           {this.state.error ? (
             <Snackbar
               variant="error"
