@@ -5,10 +5,31 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import Carousel from 'react-material-ui-carousel'
+import {Paper} from '@material-ui/core'
 
   const product=()=>{
-    
+            function Example(props)
+        {
+            var items = [
+                {
+                    name: "Random Name #1",
+                    description: "Probably the most random thing you have ever seen!"
+                },
+                {
+                    name: "Random Name #2",
+                    description: "Hello World!"
+                }
+            ]
+        
+            return (
+                <Carousel>
+                    {
+                        items.map( (item, i) => <Item key={i} item={item} /> )
+                    }
+                </Carousel>
+            )
+        }
     const getproduct=(product,index)=>{
         return(
             <Card style={{flexBasis:'18%',marginTop:10,marginRight:5}} >
