@@ -1,11 +1,11 @@
 import Login from './pages/login'
-import Navbar from './components/Navbar'
+import Navbar from './components/homecomponent/Navbar'
 import Home from './pages/Home'
 import Register from './pages/register'
 import {Switch,Route} from 'react-router-dom'
 import Product from './pages/Product'
 import './App.css'
-import Footer from './components/Footer'
+import Footer from './components/homecomponent/Footer'
 function App() {
   return (
     <>
