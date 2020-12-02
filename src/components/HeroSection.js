@@ -9,7 +9,7 @@ function HeroSection() {
       <video src='/videos/video-1.mp4' autoPlay loop muted />
       {/* <img src='images/img-home.jpg'/> */}
       <h1>Your Most Trusted Pharmacy</h1>
-      <p>That's not a Joke</p>
+      <p>What Are You Waiting For?</p>
       <div className='hero-btns'>
         <Link to='/Register'>
           <Button

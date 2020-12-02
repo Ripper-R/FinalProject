@@ -16,18 +16,19 @@ export const register = theme => ({
     [theme.breakpoints.up(400 + theme.spacing(2))]: {
       width: 400,
       marginLeft: "auto",
-      marginRight: "auto"
+      marginRight: "auto",
+      borderRadius: "100%"
     }
   },
   paper: {
-    position: "relative",
+    position: "center",
     marginTop: theme.spacing(2),
-    padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
+    padding: `${theme.spacing(1)}px ${theme.spacing(1)}px`,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     background:
-      "linear-gradient(90deg, rgb(44, 44, 49) 0%, rgb(92, 166, 226) 100%)",
+      "linear-gradient(180deg, rgb(143, 204, 236  ) 15%, rgb(138, 119, 191 ) 90%)",
     boxShadow: ".2px 12px 18px rgba(131,153,167,0.6)",
 
     "&:hover": {
@@ -59,7 +60,7 @@ export const register = theme => ({
     fontFamily: "PT Mono, monospace",
     fontWeight: 300,
     opacity: 0.45,
-    color: "#fff"
+    color: `${textDark} !important`
   },
 
   inputs: {
@@ -67,7 +68,7 @@ export const register = theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     fontFamily: "Cutive Mono, monospace",
-    color: "#fff",
+    color: textDark,
     fontSize: "14px",
     padding: `${theme.spacing(1.5)}px ${theme.spacing(1)}px`,
     borderRadius: "8px",
@@ -148,13 +149,11 @@ export const register = theme => ({
   },
 
   sgnuptext: {
-    color: "#fff",
+    color: textLight,
     justifyself: "start",
-    marginleft: "20px",
-    textdecoration: "none",
     fontSize: "35px",
-    display: "flex",
     alignItems: "center",
+    marginTop:10
     // width: "100px",
     // height: "100px",
     // fontWeight: "500"

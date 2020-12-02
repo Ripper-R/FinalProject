@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { register } from "../components/RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import FacebookIcon from '@material-ui/icons/Facebook';
+import {Link} from "react-router-dom"
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -70,7 +71,7 @@ class Registration extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.main}>
+      <div className={classes.main} style={{backgroundColor:"#588FC8"}}>
         <CssBaseline />
 
         <Paper className={classes.paper}>
@@ -78,7 +79,7 @@ class Registration extends Component {
                 Drugstore
                 <i class="fas fa-prescription-bottle-alt"></i>
             </div>
-            <div style={{color:"#fff", fontSize:"20px", textAlign:"center", marginTop:"20px", fontFamily:"inherit"}}>
+            <div style={{color:"#eaf2f4", fontSize:"20px", textAlign:"center", marginTop:"20px", fontFamily:"inherit", marginBottom:"-20px"}}>
                 Sign Up to See Our Latest Products and Articles!
             </div>
           {/* <Avatar className={classes.avatar}>
@@ -88,6 +89,20 @@ class Registration extends Component {
             className={classes.form}
             onSubmit={() => this.submitRegistration}
           >
+            <FormControl required fullWidth margin="normal">
+              <InputLabel className={classes.labels}>
+                Username
+              </InputLabel>
+              <Input
+                name="Username"
+                type="Username"
+                autoComplete="Usernam"
+                className={classes.inputs}
+                disableUnderline={true}
+                onChange={this.handleChange("email")}
+              />
+            </FormControl>
+
             <FormControl required fullWidth margin="normal">
               <InputLabel htmlFor="email" className={classes.labels}>
                 e-mail
@@ -179,8 +194,11 @@ class Registration extends Component {
               type="submit"
               onClick={this.submitRegistration}
             >
-              Join
+              Sign-Up
             </Button>
+            <div style={{textAlign:"center", marginTop:10}}>
+              Already Sign-Up? Login <Link to="/login"> Here </Link>
+            </div>
           </form>
           <Button style={{marginTop:20}} variant='contained' color='primary'>
               <FacebookIcon/>Sign in with Facebook

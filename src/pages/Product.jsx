@@ -9,7 +9,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from './../components/Footer'
-  const product=()=>{
+ 
+
+
+const product=()=>{
     var settings = {
       dots: true,
       infinite: true,
@@ -34,7 +37,7 @@ import Footer from './../components/Footer'
               </Typography>
               <Typography variant="body2" component="p">
                 {product.details}
-               
+              
               </Typography>
             </CardContent>
             <CardActions>
