@@ -24,7 +24,7 @@ import Typography from '@material-ui/core/Typography';
               </Typography>
               <Typography variant="body2" component="p">
                 {product.details}
-               
+              
               </Typography>
             </CardContent>
             <CardActions>
