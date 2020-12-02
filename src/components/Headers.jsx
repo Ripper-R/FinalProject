@@ -75,7 +75,7 @@ const Example = (props) => {
         />
       </FormControl>
           <Button style={{marginLeft:10}}><Link to='/Login'>Login</Link></Button>
-          <Button style={{marginLeft:10}}>Register</Button>
+          <Button style={{marginLeft:10}}><Link to='/Register'>Register</Link></Button>
          
         </Collapse>
       </Navbar>
