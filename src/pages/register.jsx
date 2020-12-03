@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { register } from "../components/RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
+import Zoom from "react-reveal/Zoom"
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -19,6 +20,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 class Registration extends Component {
   state = {
+    username: "",
     email: "",
     password: "",
     passwordConfrim: "",
@@ -56,10 +58,11 @@ class Registration extends Component {
     if (!this.passwordMatch()) {
       this.setState({
         errorOpen: true,
-        error: "Passwords don't match"
+        error: " Please Retry! Passwords don't match"
       });
     }
     const newUserCredentials = {
+      username: this.state.username,
       email: this.state.email,
       password: this.state.password,
       passwordConfrim: this.state.passwordConfrim
@@ -71,6 +74,8 @@ class Registration extends Component {
   render() {
     const { classes } = this.props;
     return (
+      <Zoom>
+
       <div className={classes.main} style={{backgroundColor:"#588FC8"}}>
         <CssBaseline />
 
@@ -96,10 +101,10 @@ class Registration extends Component {
               <Input
                 name="Username"
                 type="Username"
-                autoComplete="Usernam"
+                autoComplete="Username"
                 className={classes.inputs}
                 disableUnderline={true}
-                onChange={this.handleChange("email")}
+                onChange={this.handleChange("username")}
               />
             </FormControl>
 
@@ -239,6 +244,7 @@ class Registration extends Component {
           ) : null}
         </Paper>
       </div>
+      </Zoom>
     );
   }
 }

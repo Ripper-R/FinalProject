@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { register } from "../components/RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
+import Zoom from 'react-reveal/Zoom';
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -19,12 +20,13 @@ import CloseIcon from "@material-ui/icons/Close";
 
 class Registration extends Component {
 state = {
-email: "",
+username: "",
+// email: "",
 password: "",
-passwordConfrim: "",
+// passwordConfrim: "",
 hidePassword: true,
-error: null,
-errorOpen: false
+// error: null,
+// errorOpen: false
 };
 
 errorClose = e => {
@@ -39,7 +41,7 @@ this.setState({
 });
 };
 
-passwordMatch = () => this.state.password === this.state.passwordConfrim;
+// passwordMatch = () => this.state.password === this.state.passwordConfrim;
 
 showPassword = () => {
 this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
@@ -53,27 +55,30 @@ return true;
 };
 submitRegistration = e => {
 e.preventDefault();
-if (!this.passwordMatch()) {
-    this.setState({
-    errorOpen: true,
-    error: "Passwords don't match"
-    });
-}
-const newUserCredentials = {
-    email: this.state.email,
+// if (!this.passwordMatch()) {
+//     this.setState({
+//     errorOpen: true,
+//     error: "Passwords don't match"
+//     });
+// }
+const UserCredentials = {
+    username: this.state.username,
+    // email: this.state.email,
     password: this.state.password,
-    passwordConfrim: this.state.passwordConfrim
+    // passwordConfrim: this.state.passwordConfrim
 };
-console.log("this.props.newUserCredentials", newUserCredentials);
+console.log("this.props.UserCredentials", UserCredentials);
 //dispath to userActions
 };
+
 
 render() {
 const { classes } = this.props;
 return (
+    <Zoom>
     <div className={classes.main} style={{backgroundColor:"#588FC8"}}>
     <CssBaseline />
-
+        
     <Paper className={classes.paper}>
         <div className={classes.sgnuptext}>
             Drugstore
@@ -93,10 +98,10 @@ return (
             <Input
             name="Username"
             type="Username"
-            autoComplete="Usernam"
+            autoComplete="Username"
             className={classes.inputs}
             disableUnderline={true}
-            onChange={this.handleChange("email")}
+            onChange={this.handleChange("username")}
             />
         </FormControl>
 
@@ -134,8 +139,8 @@ return (
         </FormControl>
 
     <Button
-        disabled={!this.isValid()}
-        disableRipple
+        // disabled={!this.isValid()}
+        // disableRipple
         fullWidth
         variant="outlined"
         className={classes.button}
@@ -185,6 +190,7 @@ return (
         ) : null}
     </Paper>
     </div>
+    </Zoom>
 );
 }
 }
