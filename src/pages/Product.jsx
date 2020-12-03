@@ -9,7 +9,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from './../components/homecomponent/Footer'
- 
+import Bounce from 'react-reveal/Bounce';
 
 
 const product=()=>{
@@ -25,8 +25,8 @@ const product=()=>{
     const getproduct=(product,index)=>{
         return(
 
-
-            <Card style={{flexBasis:'18%',marginTop:10,marginRight:5}} >
+          <Bounce top>
+            <Card style={{flexBasis:'20%',marginTop:10,marginRight:10}} >
             <CardContent>
               <Typography  color="textSecondary" gutterBottom>
                 GAMBAR
@@ -46,6 +46,7 @@ const product=()=>{
               <Button size="small">To details</Button>
             </CardActions>
           </Card>
+          </Bounce>
         )
     }
     
@@ -61,7 +62,7 @@ const product=()=>{
                   </div>
                     </Slider>
             </div>
-        <div style={{width:'100%',height:'100%',borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray',marginTop:20,marginBottom:20}}>
+        <div style={{width:'100%',height:500,borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray',marginTop:20,marginBottom:20}}>
             <div style={{flexWrap:'wrap',display:'flex',padding:20,justifyContent:'space-evenly'}}>
               {
                   products.map((product, index) => {
