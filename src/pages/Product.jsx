@@ -15,6 +15,7 @@ import Footer from './../components/Footer'
 const product=()=>{
     var settings = {
       dots: true,
+      fade: true,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
