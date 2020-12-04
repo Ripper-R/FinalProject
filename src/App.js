@@ -5,7 +5,7 @@ import Register from './pages/register'
 import {Switch,Route} from 'react-router-dom'
 import Product from './pages/Product'
 import './App.css'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import Admin from './pages/admin/adminpage'
 function App() {
   return (
