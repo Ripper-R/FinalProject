@@ -3,7 +3,7 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar() {
+const Navbar = () => {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -30,7 +30,7 @@ function Navbar() {
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             DrugStore
-            <i class="fas fa-prescription-bottle-alt"></i>
+            <i className="fas fa-prescription-bottle-alt"></i>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
@@ -52,11 +52,11 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/products"
+                to="/admin"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                <i class="fas fa-cart-plus"></i>
+                Admin
               </Link>
             </li>
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { register } from "../components/RegistrationStyles";
+import { register } from "./register/RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
 import Zoom from 'react-reveal/Zoom';

@@ -154,8 +154,5 @@ export const register = theme => ({
     fontSize: "35px",
     alignItems: "center",
     marginTop:10
-    // width: "100px",
-    // height: "100px",
-    // fontWeight: "500"
   }
 });
