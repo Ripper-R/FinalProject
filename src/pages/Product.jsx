@@ -20,7 +20,6 @@ const product=()=>{
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      fade:true
     };
     const getproduct=(product,index)=>{
         return(
@@ -55,10 +54,10 @@ const product=()=>{
           <div style={{width:600,height:400,marginBottom:20,marginTop:20}}>
               <Slider {...settings}>
                   <div >
-                    <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-1.jpg'/>
+                    <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-1.jpg' alt="gambar"/>
                   </div>
                   <div>
-                  <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-6.jpg'/>
+                  <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-6.jpg' alt="gambar"/>
                   </div>
                     </Slider>
             </div>

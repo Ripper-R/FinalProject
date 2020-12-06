@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { register } from "../components/RegistrationStyles";
+import { register } from "./RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
 import Zoom from "react-reveal/Zoom"
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
 import { FormControl, Input, InputLabel, Button } from "@material-ui/core";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import IconButton from "@material-ui/core/IconButton";
@@ -87,9 +85,6 @@ class Registration extends Component {
             <div style={{color:"#eaf2f4", fontSize:"20px", textAlign:"center", marginTop:"20px", fontFamily:"inherit", marginBottom:"-20px"}}>
                 Sign Up to See Our Latest Products and Articles!
             </div>
-          {/* <Avatar className={classes.avatar}>
-            <PeopleAltIcon className={classes.icon} />
-          </Avatar> */}
           <form
             className={classes.form}
             onSubmit={() => this.submitRegistration}
