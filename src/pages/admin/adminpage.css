@@ -1,22 +1,17 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
-@import url("https://fonts.googleapis.com/css?family=Raleway:200");
+/* @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url("https://fonts.googleapis.com/css?family=Raleway:200"); */
 
-h1 {
-  text-align: center;
-  font-family: Raleway;
-  color: #3e7ba3;
-}
-.container {
+.admincontainer {
   display: flex;
   justify-content: center;
 }
-.container2 {
+.admincontainer2 {
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
 
-div.item {
+div.adminitem {
   position: relative;
   float: left;
   overflow: hidden;
@@ -30,19 +25,19 @@ div.item {
   border-radius: 10px;
 }
 
-div.item * {
+div.adminitem * {
   box-sizing: border-box;
   border-radius: 10px;
 }
 
-div.item img {
+div.adminitem img {
   max-width: 100%;
   vertical-align: top;
   height: 210px;
   border-radius: 10px;
 }
 
-div.item i {
+div.adminitem i {
   position: absolute;
   top: 45%;
   left: 50%;
@@ -55,7 +50,7 @@ div.item i {
   background: #ffffff;
 }
 
-div.item h2 {
+div.adminitem h2 {
   position: absolute;
   top: 72%;
   left: 48%;
@@ -66,7 +61,7 @@ div.item h2 {
   line-height: 60px;
 }
 
-div.item h3 {
+div.adminitem h3 {
   position: absolute;
   top: 72%;
   left: 46%;
@@ -77,7 +72,7 @@ div.item h3 {
   line-height: 60px;
 }
 
-div.item a {
+div.adminitem a {
   left: 0;
   right: 0;
   top: 0;
@@ -85,61 +80,61 @@ div.item a {
   position: absolute;
 }
 
-div.item.blue {
+div.adminitem.blue {
   background-color: #34495e;
 }
-div.item.blue i {
+div.adminitem.blue i {
   color: #34495e;
 }
-div.item.red {
+div.adminitem.red {
   background-color: #e74c3c;
 }
-div.item.red i {
+div.adminitem.red i {
   color: #e74c3c;
 }
 
-div.item.green {
+div.adminitem.green {
   background-color: #16a085;
 }
-div.item.green i {
+div.adminitem.green i {
   color: #16a085;
 }
 
-div.item:hover img {
+div.adminitem:hover img {
   opacity: 0.3;
   filter: grayscale(100%);
 }
 
-div.item * {
+div.adminitem * {
   transition: all 0.35s ease-in-out;
 }
 
-div.item i {
+div.adminitem i {
   transform: translate(-50%, -50%) scale(0);
   transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-div.item:hover i {
+div.adminitem:hover i {
   transform: translate(-50%, -50%) scale(1);
   transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-div.item h2 {
+div.adminitem h2 {
   transform: translate(-50%, -70%) scale(0);
   transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-div.item:hover h2 {
+div.adminitem:hover h2 {
   transform: translate(-50%, -70%) scale(1);
   transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-div.item h3 {
+div.adminitem h3 {
   transform: translate(-50%, -70%) scale(0);
   transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-div.item:hover h3 {
+div.adminitem:hover h3 {
   transform: translate(-50%, -70%) scale(1);
   transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

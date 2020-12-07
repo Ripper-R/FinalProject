@@ -12,13 +12,13 @@ function Cards() {
             <CardItem
               src='images/img-9.jpg'
               text='Segala Hal Tentang Penyakit Lambung Yang Perlu Diketahui'
-              label='Penyakit'
+              cardlabel='Penyakit'
               path='/services'
             />
             <CardItem
               src='images/img-2.jpg'
               text='Kenali Beberapa Penyebab Sakit Kepala Yang Akan Membuatmu Tenang'
-              label='Penyakit'
+              cardlabel='Penyakit'
               path='/services'
             />
           </ul>
@@ -26,19 +26,19 @@ function Cards() {
             <CardItem
               src='images/img-3.jpg'
               text='Diet Keto: Ketahui Manfaat, Cara Menjalani, dan Risikonya'
-              label='Diet&Nutrisi'
+              cardlabel='Diet&Nutrisi'
               path='/services'
             />
             <CardItem
               src='images/img-4.jpg'
               text='Ketahui Manfaat dan Risiko Diet Atkins Sebelum Melakukannya'
-              label='Diet&Nutrisi'
+              cardlabel='Diet&Nutrisi'
               path='/products'
             />
             <CardItem
               src='images/img-8.jpg'
               text='Jangan Lupakan Beberapa Nutrisi Ini Ketika Diet'
-              label='Diet&Nutrisi'
+              cardlabel='Diet&Nutrisi'
               path='/sign-up'
             />
           </ul>

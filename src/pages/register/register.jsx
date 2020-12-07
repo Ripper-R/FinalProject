@@ -3,8 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { register } from "./RegistrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
-import Zoom from "react-reveal/Zoom"
-
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import { FormControl, Input, InputLabel, Button } from "@material-ui/core";
@@ -15,6 +13,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
 import CloseIcon from "@material-ui/icons/Close";
+import Zoom from "react-reveal/Zoom"
 
 class Registration extends Component {
   state = {

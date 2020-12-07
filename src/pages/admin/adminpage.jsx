@@ -12,12 +12,12 @@ const Adminpage=()=>{
 
 <div style={{height:650}}>     
 
-<h1 style={{paddingTop:25, marginBottom:25}}>
+<h1 style={{paddingTop:25, marginBottom:25, color:"#3e7ba3", textAlign:"center"}}>
 What Are You Going To Do Today?
 </h1>
 
-<div className="container">
-<div className="item red">
+<div className="admincontainer">
+<div className="adminitem red">
 	<img src='images/img-10.jpg' alt='product'/>
     <Link to = '/adminproduct'>
 	<i className="fas fa-pills"></i>
@@ -25,12 +25,12 @@ What Are You Going To Do Today?
     </Link>
 </div>
     </div>
-    <h1 style={{marginTop: "25px"}}>
+    <h1 style={{marginTop: "25px", color:"#3e7ba3", textAlign:"center"}}>
         OR
     </h1>
 
-<div className="container2">
-<div className="item blue">
+<div className="admincontainer2">
+<div className="adminitem blue">
 	<img src='images/img-11.jpg' alt='inventory'/>
     <Link to = '/admininventory'>
 	<i className="fas fa-clinic-medical"></i>
