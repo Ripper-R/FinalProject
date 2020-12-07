@@ -8,7 +8,7 @@ import './App.css'
 // import Footer from './components/Footer'
 import Admin from './pages/admin/adminpage'
 import NotFound from './pages/notfound'
-
+import Productde from './pages/productdetails'
 function App() {
   return (
     <>
@@ -18,6 +18,7 @@ function App() {
    <Route exact path='/Login' component={Login}/>
    <Route exact path='/register' component={Register}/>
     <Route exact path='/products' component={Product}/>
+    <Route exact path='/productdetails' component={Productde}/>
     <Route exact path='/admin' component={Admin}/>
     <Route path='*' component={NotFound} />
    </Switch>

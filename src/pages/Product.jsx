@@ -10,6 +10,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from './../components/homecomponent/Footer'
 import Bounce from 'react-reveal/Bounce';
+import './product.css'
+import {Link} from 'react-router-dom'
 
 
 const product=()=>{
@@ -25,7 +27,7 @@ const product=()=>{
         return(
 
           <Bounce top>
-            <Card style={{flexBasis:'20%',marginTop:10,marginRight:10}} >
+            <Card style={{flexBasis:'35%',marginTop:10,marginRight:30}} >
             <CardContent>
               <Typography  color="textSecondary" gutterBottom>
                 GAMBAR
@@ -42,7 +44,7 @@ const product=()=>{
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">To details</Button>
+              <Button size="small"><Link to='/productdetails/'>To details</Link></Button>
             </CardActions>
           </Card>
           </Bounce>
@@ -61,8 +63,8 @@ const product=()=>{
                   </div>
                     </Slider>
             </div>
-        <div style={{width:'100%',height:500,borderWidth:'3px',borderStyle:'solid',backgroundColor:'gray',marginTop:20,marginBottom:20}}>
-            <div style={{flexWrap:'wrap',display:'flex',padding:20,justifyContent:'space-evenly'}}>
+        <div style={{width:'100%',height:500,marginTop:20,marginBottom:20,borderStyle:'solid',borderWidth:'3px'}} className='conten'>
+            <div style={{flexWrap:'wrap',display:'flex',padding:40,justifyContent:'space-between'}}>
               {
                   products.map((product, index) => {
                     return getproduct(product, index)
