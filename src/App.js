@@ -9,7 +9,19 @@ import './App.css'
 import Admin from './pages/admin/adminpage'
 import NotFound from './pages/notfound'
 import Productde from './pages/productdetails'
+import adminin from './pages/admin/admininventory'
+import adminprod from './pages/admin/adminproduct'
 function App() {
+
+  // const renderproadmin=()=>{
+  //   if(props.role==='admin'){
+  //     return(
+  //       <>
+  //         <Route exact path='/admin' component={ManageAdmin}/>
+  //       </>
+  //     )
+  //   }
+  // }
   return (
     <>
    <Navbar/>
@@ -18,8 +30,12 @@ function App() {
    <Route exact path='/Login' component={Login}/>
    <Route exact path='/register' component={Register}/>
     <Route exact path='/products' component={Product}/>
-    <Route exact path='/productdetails' component={Productde}/>
+    <Route exact path='/productdetails/:id' component={Productde}/>
     <Route exact path='/admin' component={Admin}/>
+    <Route exact path='/admininventory' component={adminin}/>
+    <Route exact path='/adminproduct' component={adminprod}/>
+
+    {/* {renderproadmin()} */}
     <Route path='*' component={NotFound} />
    </Switch>
    
