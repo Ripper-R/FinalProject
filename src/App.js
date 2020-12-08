@@ -9,6 +9,8 @@ import './App.css'
 import Admin from './pages/admin/adminpage'
 import NotFound from './pages/notfound'
 import Productde from './pages/productdetails'
+import Admininventory from './pages/admin/admininventory'
+import Adminproduct from './pages/admin/adminproduct'
 function App() {
   return (
     <>
@@ -20,6 +22,8 @@ function App() {
     <Route exact path='/products' component={Product}/>
     <Route exact path='/productdetails' component={Productde}/>
     <Route exact path='/admin' component={Admin}/>
+    <Route exact path='/admininventory' component={Admininventory}/>
+    <Route exact path='/adminproduct' component={Adminproduct}/>
     <Route path='*' component={NotFound} />
    </Switch>
    
