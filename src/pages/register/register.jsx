@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { register } from "./RegistrationStyles";
+import { register } from "./registrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
 import CssBaseline from "@material-ui/core/CssBaseline";

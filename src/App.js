@@ -1,4 +1,4 @@
-import Login from './pages/login'
+import Login from './pages/login/login'
 import Navbar from './components/homecomponent/Navbar.jsx'
 import Home from './pages/Home'
 import Register from './pages/register/register'

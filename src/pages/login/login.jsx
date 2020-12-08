@@ -1,32 +1,27 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { register } from "./register/RegistrationStyles";
+import { signin } from "./loginStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Link} from "react-router-dom"
-import Zoom from 'react-reveal/Zoom';
-
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import { FormControl, Input, InputLabel, Button } from "@material-ui/core";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import IconButton from "@material-ui/core/IconButton";
-import ErrorIcon from "@material-ui/icons/Error";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
-import CloseIcon from "@material-ui/icons/Close";
+import Zoom from 'react-reveal/Zoom';
+// import Snackbar from "@material-ui/core/Snackbar";
+// import SnackbarContent from "@material-ui/core/SnackbarContent";
+// import IconButton from "@material-ui/core/IconButton";
+// import ErrorIcon from "@material-ui/icons/Error";
+// import CloseIcon from "@material-ui/icons/Close";
 
-class Registration extends Component {
+class Login extends Component {
 state = {
 username: "",
-// email: "",
 password: "",
-// passwordConfrim: "",
 hidePassword: true,
-// error: null,
-// errorOpen: false
 };
 
 errorClose = e => {
@@ -63,9 +58,7 @@ e.preventDefault();
 // }
 const UserCredentials = {
     username: this.state.username,
-    // email: this.state.email,
-    password: this.state.password,
-    // passwordConfrim: this.state.passwordConfrim
+    password: this.state.password
 };
 console.log("this.props.UserCredentials", UserCredentials);
 //dispath to userActions
@@ -153,41 +146,6 @@ return (
             Dont Have an Account? Sign-Up <Link to="/Register"> Here! </Link>
         </div>
         </form>
-
-        {this.state.error ? (
-        <Snackbar
-            variant="error"
-            key={this.state.error}
-            anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-            }}
-            open={this.state.errorOpen}
-            onClose={this.errorClose}
-            autoHideDuration={3000}
-        >
-            <SnackbarContent
-            className={classes.error}
-            message={
-                <div>
-                <span style={{ marginRight: "8px" }}>
-                    <ErrorIcon fontSize="large" color="error" />
-                </span>
-                <span> {this.state.error} </span>
-                </div>
-            }
-            action={[
-                <IconButton
-                key="close"
-                aria-label="close"
-                onClick={this.errorClose}
-                >
-                <CloseIcon color="error" />
-                </IconButton>
-            ]}
-            />
-        </Snackbar>
-        ) : null}
     </Paper>
     </div>
     </Zoom>
@@ -195,4 +153,4 @@ return (
 }
 }
 
-export default withStyles(register)(Registration);
+export default withStyles(signin)(Login);
