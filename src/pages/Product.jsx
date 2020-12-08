@@ -1,5 +1,4 @@
-import React from 'react';
-import {products} from './Productdummy'
+import React,{useEffect,useState} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,9 +11,9 @@ import Footer from './../components/homecomponent/Footer'
 import Bounce from 'react-reveal/Bounce';
 import './product.css'
 import {Link} from 'react-router-dom'
+import Axios from 'axios' 
 
-
-const product=()=>{
+const Product=()=>{
     var settings = {
       dots: true,
       fade: true,
@@ -23,28 +22,42 @@ const product=()=>{
       slidesToShow: 1,
       slidesToScroll: 1,
     };
-    const getproduct=(product,index)=>{
+   const [Data,setData]= useState([])
+
+    useEffect(()=>{
+      Axios.get('http://localhost:8080/product/getproduct')
+      .then((res)=>{
+        setData(res.data)
+      })
+      .catch(()=>{
+
+      })
+    },[])
+  
+    const Getproduct=(state,index)=>{
+     
+
         return(
 
           <Bounce top>
-            <Card style={{flexBasis:'35%',marginTop:10,marginRight:30}} >
+            <Card style={{flexBasis:'25%',marginTop:10,marginRight:40,width:200}} >
             <CardContent>
               <Typography  color="textSecondary" gutterBottom>
-                GAMBAR
+              <img src={`http://localhost:8080/${state.banner}`} style={{width:150,height:100}}/>
               </Typography>
               <Typography variant="h5" component="h2">
-                {product.name}
+                {state.nama}
               </Typography>
               <Typography  color="textSecondary">
-                {product.price}
+                {state.price}
               </Typography>
               <Typography variant="body2" component="p">
-                {product.details}
+                {state.deskripsi}
               
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small"><Link to='/productdetails/'>To details</Link></Button>
+              <Button size="small"><Link to={'/productdetails/'+state.id}>To details</Link></Button>
             </CardActions>
           </Card>
           </Bounce>
@@ -63,11 +76,11 @@ const product=()=>{
                   </div>
                     </Slider>
             </div>
-        <div style={{width:'100%',height:500,marginTop:20,marginBottom:20,borderStyle:'solid',borderWidth:'3px'}} className='conten'>
-            <div style={{flexWrap:'wrap',display:'flex',padding:40,justifyContent:'space-between'}}>
+        <div style={{width:'100%',height:950,marginTop:20,marginBottom:20,borderStyle:'solid',borderWidth:'3px'}} className='conten'>
+            <div style={{flexWrap:'wrap',display:'flex',padding:40,justifyContent:'flex-start'}}>
               {
-                  products.map((product, index) => {
-                    return getproduct(product, index)
+                  Data.map((val, index) => {
+                    return Getproduct(val, index)
                 })
               }
             </div>
@@ -81,4 +94,4 @@ const product=()=>{
 }
 
 
-export default product
+export default Product
