@@ -208,7 +208,7 @@ class Registration extends Component {
               key={this.state.error}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "center"
+                horizontal: "right"
               }}
               open={this.state.errorOpen}
               onClose={this.errorClose}
