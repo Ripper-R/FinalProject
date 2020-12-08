@@ -10,25 +10,45 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {MdDeleteForever} from 'react-icons/md'
 import {BiEdit,BiPlusCircle} from 'react-icons/bi'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,CustomInput } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter,CustomInput } from 'reactstrap';
 import {priceFormatter, API_URL,API_URLbe} from './../../helper/idformat'
+import Modal from '@material-ui/core/Modal';
 import axios from 'axios'
 import {connect} from 'react-redux'
+import {Button} from './../../components/homecomponent/Button' 
 // import from 'react-router-dom'
 import Notfound from './../notfound'
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
   root: {
     width: '100%',
   },
   container: {
     maxHeight: 440,
   },
-});
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  }
+}));
 
 function StickyHeadTable(props) {
   const classes = useStyles();
   const [modal, setModal] = useState(false);
   const [modaledit, setModaledit] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [modalfoto,setmodalfoto]=useState(false)
   const [fotos,setfotos]=useState([null])
@@ -59,7 +79,7 @@ function StickyHeadTable(props) {
       .then((res)=>{
         console.log(res.data)
         setProduct(res.data)
-        seteditform({...editform,harga:res.data[0].harga})
+        seteditform({...editform,price:res.data[0].price})
       }).catch((err)=>{
         console.log(err)
       })
@@ -73,10 +93,12 @@ function StickyHeadTable(props) {
         console.log(e.target.files[0])
         setbanner(e.target.files[0])
     }else{
-        console.log('hapus')
+        
         setbanner(null)
     }
   }
+
+  
 
   const oninputfilefotochange=(e,index)=>{
     console.log(e.target.files)
@@ -96,10 +118,10 @@ function StickyHeadTable(props) {
 
   const onhargachange=(e)=>{
     if(e.target.value===''){
-      setaddform({...addform,harga:0})
+      setaddform({...addform,price:0})
     }
     if(Number(e.target.value)){
-        if(addform.harga === 0){
+        if(addform.price === 0){
             setaddform({...addform,price:e.target.value[1]})
         }else{
             setaddform({...addform,price:e.target.value})    
@@ -120,25 +142,7 @@ function StickyHeadTable(props) {
     }
   }
 
-  const dateformat=(n)=>{
-    var today = new Date(n);
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = mm + '-' + dd + '-' + yyyy;
-    return today
-  }
-  const dateeditformat=(n)=>{
-    var today = new Date(n);
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '-' + dd;
-    return today
-  }
-
+  
   const readMore=(kata='')=>{
     const hitungkata=kata.split(' ').filter((val)=>val!=='').length
     if(hitungkata>10){
@@ -244,6 +248,31 @@ function StickyHeadTable(props) {
     //     })
     // })
   }
+  const body = (
+    <div  className={classes.paper}>
+      <div>
+           <input type='text' ref={addform.nama} placeholder='Masukkan Nama' className='form-control mb-2'/>
+            <input type="file" className='form-control' onChange={oninputfilechange} />
+                 {
+                   banner?
+                   <div className='my-2'>
+                     <img src={URL.createObjectURL(banner)} height='200'
+                     widht='200' alt="foto"/>
+
+                   </div>
+                   :
+                   null
+                 }
+                 <div>
+            <input type='text' onChange={(e)=>onhargachange(e)} placeholder='Rp....' value={addform.price} className='form-control mb-2'/>
+                 </div>
+            <textarea className='form-control mb-2' ref={addform.deskripsi} placeholder='deskripsi' cols="30" rows="7"></textarea>
+        </div>
+      
+      <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
+      <Button color="secondary" onClick={()=>toggle()}>Cancel</Button>
+    </div>
+  );
   
   const renderTable=()=>{
     return product.map((val,index)=>{
@@ -293,31 +322,18 @@ function StickyHeadTable(props) {
   console.log(fotos)
     return (
         <>
-          <Modal style={{marginTop:80}} isOpen={modal} toggle={toggle} >
-              <ModalHeader toggle={toggle}>Add data</ModalHeader>
-              <ModalBody>
-                 <input type='text' ref={addform.nama} placeholder='Masukkan Nama' className='form-control mb-2'/>
-                 <input type="file" className='form-control' onChange={oninputfilechange} />
-                 {
-                   banner?
-                   <div className='my-2'>
-                     <img src={URL.createObjectURL(banner)} height='200'
-                     widht='200' alt="foto"/>
-
-                   </div>
-                   :
-                   null
-                 }
-                
-                 <input type='text' onChange={onhargachange} placeholder='Rp....' value={addform.price} className='form-control mb-2'/>
-                 <textarea className='form-control mb-2' ref={addform.deskripsi} placeholder='deskripsi' cols="30" rows="7"></textarea>
-              </ModalBody>
-              <ModalFooter>
-                  <Button color="primary" onClick={OnAdddataClick}>Add data</Button>
-                  <Button color="secondary" onClick={toggle}>Cancel</Button>
-              </ModalFooter>
-          </Modal>
-          {
+          <Button type="button" onClick={handleOpen}>
+        Add data
+          </Button>
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+          >
+              {body}
+        </Modal>
+          {/* {
             product.length?
               <Modal isOpen={modaledit} toggle={toggleedit} >
                   <ModalHeader toggle={toggleedit}>edit data {product.length?product[indexedit].namatrip:''}</ModalHeader>
@@ -364,12 +380,10 @@ function StickyHeadTable(props) {
                   <Button color="primary" onClick={onAddphotoprod}>Add data</Button>
                   <Button color="secondary" onClick={togglefoto}>Cancel</Button>
               </ModalFooter>
-          </Modal>
+          </Modal> */}
           
           <div className='px-5 martgintop'>
-              <Button onClick={toggle} className='my-3' >
-                  Add Data
-              </Button>
+             
               <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
