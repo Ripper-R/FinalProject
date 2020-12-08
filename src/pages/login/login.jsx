@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { signin } from "./loginStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {Link} from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -11,6 +11,8 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
 import Zoom from 'react-reveal/Zoom';
+import {LoginFunc,LoginThunk,Clearfunc} from '../../redux/actions'
+import { connect } from 'react-redux'
 // import Snackbar from "@material-ui/core/Snackbar";
 // import SnackbarContent from "@material-ui/core/SnackbarContent";
 // import IconButton from "@material-ui/core/IconButton";
@@ -18,11 +20,11 @@ import Zoom from 'react-reveal/Zoom';
 // import CloseIcon from "@material-ui/icons/Close";
 
 class Login extends Component {
-state = {
-username: "",
-password: "",
-hidePassword: true,
-};
+    state = {
+        username:createRef(),
+        password:createRef(),
+        alert:''
+    }
 
 errorClose = e => {
 this.setState({
@@ -42,31 +44,36 @@ showPassword = () => {
 this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
 };
 
-isValid = () => {
-if (this.state.email === "") {
-    return false;
-}
-return true;
-};
-submitRegistration = e => {
-e.preventDefault();
-// if (!this.passwordMatch()) {
-//     this.setState({
-//     errorOpen: true,
-//     error: "Passwords don't match"
-//     });
+// isValid = () => {
+// if (this.state.email === "") {
+//     return false;
 // }
-const UserCredentials = {
-    username: this.state.username,
-    password: this.state.password
-};
-console.log("this.props.UserCredentials", UserCredentials);
-//dispath to userActions
-};
+// return true;
+// };
+// submitLogin = e => {
+// e.preventDefault();
+// }
+// const UserCredentials = {
+//     username: this.state.username,
+//     password: this.state.password
+// };
+// console.log("this.props.UserCredentials", UserCredentials);
+// //dispath to userActions
+// };
 
+OnLoginClick=()=>{
+    const {username,password}=this.state
+    var username1=username.current.value
+    var password1=password.current.value
+    this.props.LoginFunc(username1,password1)
+};
 
 render() {
 const { classes } = this.props;
+console.log(this.props.Auth)
+// if(this.props.Auth.isLogin){
+//     return <Redirect to='/'/>
+// }
 return (
     <Zoom>
     <div className={classes.main} style={{backgroundColor:"#588FC8"}}>
@@ -94,7 +101,7 @@ return (
             autoComplete="Username"
             className={classes.inputs}
             disableUnderline={true}
-            onChange={this.handleChange("username")}
+            inputRef={this.state.username} 
             />
         </FormControl>
 
@@ -107,7 +114,7 @@ return (
             autoComplete="password"
             className={classes.inputs}
             disableUnderline={true}
-            onChange={this.handleChange("password")}
+            inputRef={this.state.password} 
             type={this.state.hidePassword ? "password" : "input"}
             endAdornment={
                 this.state.hidePassword ? (
@@ -132,13 +139,13 @@ return (
         </FormControl>
 
     <Button
-        disabled={!this.isValid()}
-        disableRipple
+        // disabled={!this.isValid()}
+        // disableRipple
         fullWidth
         variant="outlined"
         className={classes.button}
         type="submit"
-        onClick={this.submitRegistration}
+        onClick={this.OnLoginClick}
         >
             Log-In
         </Button>
@@ -153,4 +160,10 @@ return (
 }
 }
 
-export default withStyles(signin)(Login);
+const Mapstatetoprops=(state)=>{
+    return{
+        Auth:state.Auth
+    }
+}
+
+export default withStyles(signin) (connect(Mapstatetoprops,{LoginFunc,LoginThunk,Clearfunc})(Login));

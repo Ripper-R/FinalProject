@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { API_URLbe } from '../../helper/idformat'
 // import {ADDCART} from './../Type'
 export const LoginFunc=(user,cart)=>{
+    console.log(user)
     return{
         type:'LOGIN',
         payload:user,

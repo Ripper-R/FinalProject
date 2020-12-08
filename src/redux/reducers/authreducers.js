@@ -1,15 +1,16 @@
 const INITIAL_STATE={
     id:0,
-    email:'',
+    username:'',
     password:'',
-    islogin:'',
-    role:''
+    isLogin:false,
+    role:'',
+    error:''
 
 }
 const reducers=(state=INITIAL_STATE,action)=>{
     switch (action.type) {
         case 'LOGIN':
-            return {...state,...action.payload}
+            return {...state,...action.payload, isLogin:true}
         case 'LOGOUT':
             return INITIAL_STATE
         case 'CLEAR':

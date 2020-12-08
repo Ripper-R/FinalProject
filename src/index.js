@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import {BrowserRouter} from 'react-router-dom'
 import reducers from './redux/reducers'
+import Thunk from 'redux-thunk'
+
+const globalStore = createStore(reducers)
+
+globalStore.subscribe(()=> 
+console.log('Global Store : ', globalStore.getState()))
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={createStore(reducers)}>
+    <Provider store = {globalStore}>
 
     <BrowserRouter>
       <App/>
