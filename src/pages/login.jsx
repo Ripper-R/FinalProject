@@ -139,8 +139,8 @@ return (
         </FormControl>
 
     <Button
-        // disabled={!this.isValid()}
-        // disableRipple
+        disabled={!this.isValid()}
+        disableRipple
         fullWidth
         variant="outlined"
         className={classes.button}
