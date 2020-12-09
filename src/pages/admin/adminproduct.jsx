@@ -301,7 +301,7 @@ function StickyHeadTable(props) {
 
   const toggle = () => {
     setModal(!modal)
-    setbanner(null)
+    
   }
   const togglefoto = (id) => {
     setmodalfoto(!modalfoto) //untuk buka modal
