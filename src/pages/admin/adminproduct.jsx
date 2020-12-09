@@ -1,5 +1,5 @@
 import React, {useState,useRef, useEffect} from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {MdDeleteForever} from 'react-icons/md'
 import {BiEdit,BiPlusCircle} from 'react-icons/bi'
-// import { Button, Modal, ModalHeader, ModalBody, ModalFooter,CustomInput } from 'reactstrap';
+
 import {priceFormatter, API_URL,API_URLbe} from './../../helper/idformat'
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios'
