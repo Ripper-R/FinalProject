@@ -2,13 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import {connect} from 'react-redux'
+import {LogOutfunc} from '../../redux/actions'
 
-const Navbar = () => {
+const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const [anchorEl,setopen]=useState(null)
+  const [anchorElcart,setopencart]=useState(null)
+
+  const Logoutbtn=()=>{
+    localStorage.removeItem('id')
+    LogOutfunc()
+  }
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -24,6 +34,8 @@ const Navbar = () => {
 
   window.addEventListener("resize", showButton);
 
+  
+
   return (
     <>
       <nav className="navbar">
@@ -37,7 +49,10 @@ const Navbar = () => {
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <Link 
+                to="/" 
+                className="nav-links" 
+                onClick={closeMobileMenu}>
                 About Us
               </Link>
             </li>
@@ -50,31 +65,82 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
-            <li className="nav-item">
+              {
+                role==='admin'?
+              <li className="nav-item">
               <Link
                 to="/admin"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Admin
+                Manage Admin
+              </Link>
+              </li>
+              :
+              role==='user'?
+              <li className="nav-item">
+              <Link
+                to="/userhistory"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+              <i class="fas fa-cart-plus"></i>
               </Link>
             </li>
+              :
+              null
+              }
 
-            <li>
+              {
+                isLogin && role!=='admin' ?
+                <li className="nav-item">
+                <Link
+                  to="/userhistory"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                <i class="fas fa-user"></i> &nbsp; {username}
+                </Link>
+              </li>
+              :
+              null
+            }
+
+            {isLogin?
               <Link
                 to="/login"
                 className="nav-links-mobile"
-                onClick={closeMobileMenu}
+                onClick={closeMobileMenu, Logoutbtn}
               >
-                Log-In
+                Log-Out
               </Link>
-            </li>
-          </ul>
-          {button && <Link to='/login' className='btn-mobile'><Button buttonStyle="btn--outline">Log-In</Button></Link> }
+              :
+              <Link
+              to="/login"
+              className="nav-links-mobile"
+              onClick={closeMobileMenu}
+            >
+              Log-In
+            </Link>
+          }
+            </ul>
+              
+          {
+          isLogin?
+          button && <Button onClick={Logoutbtn} buttonStyle="btn--outline">Log-Out</Button>
+          :
+          button && <Link to='/login' className='btn-mobile'><Button buttonStyle="btn--outline">Log-In</Button></Link>
+          }
         </div>
       </nav>
     </>
   );
 }
 
-export default Navbar;
+const MapstatetoProps=({Auth})=>{
+  return {
+    ...Auth
+  }
+}
+
+export default connect(MapstatetoProps,{LogOutfunc})(Navbar);

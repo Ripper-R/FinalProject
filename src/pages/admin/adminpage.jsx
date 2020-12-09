@@ -24,12 +24,7 @@ What Are You Going To Do Today?
     <h2>Product</h2>
     </Link>
 </div>
-    </div>
-    <h1 style={{marginTop: "25px", color:"#3e7ba3", textAlign:"center"}}>
-        OR
-    </h1>
 
-<div className="admincontainer2">
 <div className="adminitem blue">
 	<img src='images/img-11.jpg' alt='inventory'/>
     <Link to = '/admininventory'>
@@ -37,9 +32,16 @@ What Are You Going To Do Today?
     <h3>Inventory</h3>
     </Link>
 </div>
-    </div>
+<div className="adminitem green">
+    <img src='images/img-12.jpg' alt='transaction'/>
+    <Link to = '/admintransaction'>
+    <i class="fas fa-file-invoice-dollar"></i>
+    <h4>Transaction</h4>
+    </Link>
+</div>
 
-        </div>
+    </div>
+</div>
 </Zoom>
     )
 }

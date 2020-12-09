@@ -38,42 +38,26 @@ this.setState({
 });
 };
 
-// passwordMatch = () => this.state.password === this.state.passwordConfrim;
+// // passwordMatch = () => this.state.password === this.state.passwordConfrim;
 
 showPassword = () => {
 this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
 };
 
-// isValid = () => {
-// if (this.state.email === "") {
-//     return false;
-// }
-// return true;
-// };
-// submitLogin = e => {
-// e.preventDefault();
-// }
-// const UserCredentials = {
-//     username: this.state.username,
-//     password: this.state.password
-// };
-// console.log("this.props.UserCredentials", UserCredentials);
-// //dispath to userActions
-// };
-
-OnLoginClick=()=>{
+OnLoginClick = (e) => {
     const {username,password}=this.state
     var username1=username.current.value
     var password1=password.current.value
-    this.props.LoginFunc(username1,password1)
+    this.props.LoginThunk(username1,password1)
+    e.preventDefault()
 };
 
 render() {
 const { classes } = this.props;
 console.log(this.props.Auth)
-// if(this.props.Auth.isLogin){
-//     return <Redirect to='/'/>
-// }
+if(this.props.Auth.isLogin){
+    return <Redirect to='/'/>
+}
 return (
     <Zoom>
     <div className={classes.main} style={{backgroundColor:"#588FC8"}}>

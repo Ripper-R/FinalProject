@@ -11,6 +11,7 @@ import NotFound from './pages/notfound'
 import Productde from './pages/productdetails'
 import adminin from './pages/admin/admininventory'
 import adminprod from './pages/admin/adminproduct'
+import userhistory from './pages/userhistory'
 function App() {
 
   // const renderproadmin=()=>{
@@ -34,6 +35,7 @@ function App() {
     <Route exact path='/admin' component={Admin}/>
     <Route exact path='/admininventory' component={adminin}/>
     <Route exact path='/adminproduct' component={adminprod}/>
+    <Route exact path='/userhistory' component={userhistory}/>
 
     {/* {renderproadmin()} */}
     <Route path='*' component={NotFound} />
