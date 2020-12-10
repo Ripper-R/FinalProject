@@ -49,6 +49,15 @@ function StickyHeadTable(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const [kimia, setKimia] = React.useState(false);
+
+  const handleOpenkim = () => {
+    setKimia(true);
+  };
+
+  const handleClosekim = () => {
+    setKimia(false);
+  };
 
   const [modalfoto,setmodalfoto]=useState(false)
   const [fotos,setfotos]=useState([null])
@@ -60,6 +69,12 @@ function StickyHeadTable(props) {
     nama:useRef(),
     price:'',
     deskripsi:useRef(),
+  
+  })
+  const [addformkim,setaddformkim]=useState({
+    product_id:useRef(),
+    kimia_id:useRef(),
+    dosis:useRef(),
   
   })
   const [editform,seteditform]=useState({
@@ -98,24 +113,6 @@ function StickyHeadTable(props) {
     }
   }
 
-  
-
-  const oninputfilefotochange=(e,index)=>{
-    console.log(e.target.files)
-    if(e.target.files[0]){
-        console.log(e.target.files[0])
-        let foto=fotos
-        foto.splice(index,1,e.target.files[0])
-        setfotos([...foto])
-    }else{
-      // codingan ini bissa buat hapus foto yang ada
-        console.log('hapus')
-        let foto=fotos
-        foto.splice(index,1,null)
-        setfotos([...foto])
-    }
-  }
-
   const onhargachange=(e)=>{
     if(e.target.value===''){
       setaddform({...addform,price:0})
@@ -131,10 +128,10 @@ function StickyHeadTable(props) {
   const onhargachangeedit=(e)=>{
     console.log(e.target.value)
     if(e.target.value===''){
-      seteditform({...editform,harga:0})
+      seteditform({...editform,price:0})
     }
     if(Number(e.target.value)){
-        if(editform.harga===0){
+        if(editform.price===0){
           seteditform({...editform,price:e.target.value[1]})
         }else{
           seteditform({...editform,price:e.target.value})    
@@ -172,10 +169,34 @@ function StickyHeadTable(props) {
       price:price,
       deskripsi:deskripsi
     }
-
+    console.log(data)
     formData.append('image',banner)
     formData.append('data',JSON.stringify(data))
       axios.post(`${API_URLbe}/product/Addproduct`,formData,options)
+      .then((res)=>{
+        console.log(res.data)
+        alert('berhasil')
+      }).catch((err)=>{
+        console.log(err)
+      })
+    
+  }
+  const OnAdddataClickkim=()=>{
+  
+    var product_id = addformkim.product_id.current.value
+    console.log(product_id)
+    var kimiaid=addformkim.kimia_id.current.value
+    console.log(kimiaid)
+    var dosis=addformkim.dosis.current.value
+    console.log(dosis)
+    var data={
+      product_id:product_id,
+      kimia_id:kimiaid,
+      dosis:dosis
+    }
+    console.log(data)
+      
+      axios.post(`${API_URLbe}/product/adddosis`,data)
       .then((res)=>{
         console.log(res.data)
         alert('berhasil')
@@ -214,7 +235,7 @@ function StickyHeadTable(props) {
 
   const Oneditclick= (index)=>{
     setindexedit(index)
-    seteditform({...editform,harga:product[index].harga})
+    seteditform({...editform,price:product[index].price})
     setModaledit(true)
     // setTimeout(() => {
     // }, 1000);
@@ -270,10 +291,25 @@ function StickyHeadTable(props) {
         </div>
       
       <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
-      <Button color="secondary" onClick={()=>toggle()}>Cancel</Button>
+      <Button color="secondary" onClick={()=>handleClose()}>Cancel</Button>
     </div>
   );
-  
+
+  const bodykim = (
+    <div  className={classes.paper}>
+      <div>
+           <input type='text' ref={addformkim.product_id} placeholder='product ke??' className='form-control mb-2'/>
+                 <div>
+            <input type='text' ref={addformkim.kimia_id} placeholder='kimia id'  className='form-control mb-2'/>
+                 </div>
+            <input type='text' ref={addformkim.dosis} placeholder='dosis'/>
+        </div>
+      
+      <Button color="primary" onClick={()=>OnAdddataClickkim()}>Add data</Button>
+      <Button color="secondary" onClick={()=>handleClosekim()}>Cancel</Button>
+    </div>
+  );
+
   const renderTable=()=>{
     return product.map((val,index)=>{
       return(
@@ -289,10 +325,12 @@ function StickyHeadTable(props) {
             <TableCell>{priceFormatter(val.price)}</TableCell>
            
             <TableCell>{readMore(val.deskripsi)}</TableCell>
+            <TableCell> <Button type="button" onClick={handleOpenkim}>
+              Add Kimia
+          </Button></TableCell>
             <TableCell>
               <span style={{fontSize:30}} className='text-danger mr-3'><MdDeleteForever/></span>
-              <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>  
-              <span style={{fontSize:30}} onClick={()=>togglefoto(val.id)}  className='text-primary ml-3'><BiPlusCircle/></span>  
+              <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>    
             </TableCell>
         </TableRow>
       )
@@ -314,16 +352,16 @@ function StickyHeadTable(props) {
     
   const toggleedit = () => setModaledit(!modaledit);
 
-  const tambahfoto=()=>{
+  // const tambahfoto=()=>{
  
-    setfotos([...fotos,null])
-  }
+  //   setfotos([...fotos,null])
+  // }
 
   console.log(fotos)
     return (
         <>
           <Button type="button" onClick={handleOpen}>
-        Add data
+              Add data
           </Button>
           <Modal
               open={open}
@@ -332,6 +370,15 @@ function StickyHeadTable(props) {
               aria-describedby="simple-modal-description"
           >
               {body}
+        </Modal>
+         
+          <Modal
+              open={kimia}
+              onClose={handleClosekim}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+          >
+              {bodykim}
         </Modal>
           {/* {
             product.length?
@@ -394,6 +441,7 @@ function StickyHeadTable(props) {
                           <TableCell style={{width:'200px'}}>Gambar</TableCell>
                           <TableCell>Harga</TableCell>
                           <TableCell style={{width:'300px'}}>Description</TableCell>
+                          <TableCell>Dosage</TableCell>
                           <TableCell >action</TableCell>
                         </TableRow>
                     </TableHead>

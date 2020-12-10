@@ -30,14 +30,17 @@ const useStyles = makeStyles((theme)=>({
       padding: theme.spacing(2, 4, 3),
     }
   }));
-
+  
 
 const Admininventory=()=>{
       const [inventory,setinventor]=useState([])
       const [open, setOpen] = React.useState(false);
       const [modal, setModal] = useState(false);
+      const [inventorynumber,setinventorynumber]=useState(null)
+      
       const handleOpen = () => {
-        setOpen(true);
+        setOpen(true)
+        setinventorynumber(inventorynumber);
       };
 
       const handleClose = () => {
@@ -78,6 +81,7 @@ const Admininventory=()=>{
         fetch()
       },[])
 
+   
       const OnAdddataClick=()=>{
         var formData=new FormData()
         var options={
@@ -103,21 +107,19 @@ const Admininventory=()=>{
     })
   
 }
-const body = (
-  <div  className={classes.paper}>
-    <div>
-         <input type='text' ref={addform.nama} placeholder='Masukkan Nama' className='form-control mb-2'/>
-          
-               <div>
-          <input type='text' onChange={(e)=>onhargachange(e)} placeholder='ml.......' value={addform.stock} className='form-control mb-2'/>
-               </div>
-         
-      </div>
-    
-    <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
-    <Button color="secondary" onClick={()=>toggle()}>Cancel</Button>
-  </div>
-);
+// const body=()=>{
+//   inventory.map((val,index)=>{
+//    <div key={index}>
+//      <div>
+//      {val.nama}
+//      </div>
+//      <div>
+//     {val.stock}
+//      </div>
+//    </div>
+
+// })
+// }
     const renderTable=()=>{
         return inventory.map((val,index)=>{
           return(
@@ -126,13 +128,13 @@ const body = (
                 <TableCell>{val.nama}</TableCell>
                 
                 
-                <TableCell>{val.stock}</TableCell>
+                <TableCell>{val.sum}</TableCell>
                
                
                 <TableCell>
                   <span style={{fontSize:30}} className='text-danger mr-3'><MdDeleteForever/></span>
-                  <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>  
-                  <span style={{fontSize:30}}  className='text-primary ml-3'><BiPlusCircle/></span>  
+                  {/* <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>   */}
+                  <span style={{fontSize:30}}  className='text-primary ml-3' onClick={()=>handleOpen(inventorynumber)}><BiPlusCircle/></span>  
                 </TableCell>
             </TableRow>
           )
@@ -145,16 +147,34 @@ const body = (
 
     return (
        <>
-        <Button type="button" onClick={handleOpen}>
-        Add data
-          </Button>
-          <Modal
+        {
+          inventory.map((val,index)=>{
+            return(
+              <div key={index}> 
+                <div>
+                  {val.nama}
+                </div>
+                <div>
+                  {val.stock}
+                </div>
+                <div>
+                  <button>add data</button>
+                  <button>cancel</button>
+         
+
+                </div>
+              </div>
+            )
+          })
+        }
+         <Modal
               open={open}
               onClose={handleClose}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
           >
-              {body}
+             
+             {inventorynumber}
         </Modal>
        <div>
        <Paper className={classes.root}>
