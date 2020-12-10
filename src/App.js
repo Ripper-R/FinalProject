@@ -14,6 +14,7 @@ import adminin from './pages/admin/admininventory'
 import adminprod from './pages/admin/adminproduct'
 import userhistory from './pages/userhistory'
 import admintransaction from './pages/admin/admintransaction'
+import Cart from './pages/cart'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { connect } from 'react-redux'
@@ -27,26 +28,27 @@ function App(props) {
 
   const [loading,setloading]=useState(true)
 
-  // useEffect( ()=>{
-  //   var id=localStorage.getItem('id')
-  //   if(id){ 
-  //     Axios.get(`${API_URLbe}/auth/keeplogin/${id}`)
-  //     .then((res)=>{
-  //       props.LoginFunc(res.data.datauser,res.data.cart)
-  //     }).catch((err)=>{
-  //       console.log(err)
-  //     }).finally(()=>{
-  //       setloading(false)
-  //     })
-  //   }else{
-  //     setloading(false)
-  //   }
-  // },[props])
-  // if(loading){
-  //   return(
-  //     <Loading/>
-  //   )
-  // }
+  useEffect( ()=>{
+    var id=localStorage.getItem('id')
+    console.log(id)
+    if(id){ 
+      Axios.get(`${API_URLbe}/auth/keeplogin/${id}`)
+      .then((res)=>{
+        props.LoginFunc(res.data.datauser,res.data.cart)
+      }).catch((err)=>{
+        console.log(err)
+      }).finally(()=>{
+        setloading(false)
+      })
+    }else{
+      setloading(false)
+    }
+  },[props])
+  if(loading){
+    return(
+      <Loading/>
+    )
+  }
 
   // const renderProtectedroutesadmin=()=>{
   //   if(props.role==='admin'){
@@ -71,6 +73,8 @@ function App(props) {
     <Route exact path='/adminproduct' component={adminprod}/>
     <Route exact path='/userhistory' component={userhistory}/>
     <Route exact path='/admintransaction' component={admintransaction}/>
+    <Route exact path='/cart' component={Cart}/>
+
 
     {/* {renderproadmin()} */}
     <Route path='*' component={NotFound} />

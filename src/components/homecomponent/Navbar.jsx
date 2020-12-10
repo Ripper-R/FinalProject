@@ -80,7 +80,7 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
               role==='user'?
               <li className="nav-item">
               <Link
-                to="/userhistory"
+                to="/cart"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
