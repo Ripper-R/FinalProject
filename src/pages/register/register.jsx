@@ -1,75 +1,125 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { register } from "./registrationStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {Link} from "react-router-dom"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import { FormControl, Input, InputLabel, Button } from "@material-ui/core";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import IconButton from "@material-ui/core/IconButton";
-import ErrorIcon from "@material-ui/icons/Error";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
-import CloseIcon from "@material-ui/icons/Close";
 import Zoom from "react-reveal/Zoom"
+import { connect } from 'react-redux';
+import { Redirect, Link } from 'react-router-dom'
+import { LoginFunc, LoginThunk, Clearfunc } from '../../redux/actions'
+import { toast } from 'react-toastify'
+import Axios from 'axios';
+import { API_URLbe } from '../../helper/idformat';
 
+
+toast.configure()
 class Registration extends Component {
   state = {
-    username: "",
-    email: "",
-    password: "",
-    passwordConfrim: "",
-    hidePassword: true,
-    error: null,
-    errorOpen: false
-  };
+    username:createRef(),
+    password:createRef(),
+    confirmpass:createRef(),
+    email:createRef(),
+    alert:''
+};
 
-  errorClose = e => {
-    this.setState({
-      errorOpen: false
-    });
-  };
 
-  handleChange = name => e => {
-    this.setState({
-      [name]: e.target.value
-    });
-  };
+checkpass=(pass='')=>{
+  var pssw=pass.replace(' ','')
+  if(pssw.length>=6){
+      var angka=false
+      var huruf=false
+      for(let i=0;i<pssw.length;i++){
+          if(isNaN(pssw[i])){
+              huruf=true
+          }else{
+              angka=true
+          }
+      }
+      if(huruf && angka){
+          return {
+              status:true
+          }
+      }else{
+          if(huruf){
+              return {
+                  status:false,
+                  message:'password harus ada angkanya'
+              }
 
-  passwordMatch = () => this.state.password === this.state.passwordConfrim;
+          }else{
+              return {
+                  status:false,
+                  message:'password harus ada hurufnya'
+              }
+          }
+      }
+  }else{
+      return {
+          status:false,
+          message:'password harus 6 karakter atau lebih'
+      }
+  }
+};
 
-  showPassword = () => {
-    this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
-  };
-
-  isValid = () => {
-    if (this.state.email === "") {
-      return false;
-    }
-    return true;
-  };
-  submitRegistration = e => {
-    e.preventDefault();
-    if (!this.passwordMatch()) {
-      this.setState({
-        errorOpen: true,
-        error: " Please Retry! Passwords don't match"
+OnRegisterClick=(e)=>{
+  const {username,password,confirmpass,email}=this.state
+  var username1=username.current.value
+  var password1=password.current.value
+  var conpass=confirmpass.current.value
+  var email1=email.current.value
+  e.preventDefault()
+  if(this.checkpass(password1).status){
+      if(password1 === conpass){
+          Axios.post(`${API_URLbe}/auth/register`,{
+              username:username1,
+              password:password1,
+              email:email1
+          })
+          .then((res)=>{
+              localStorage.setItem('id',res.data.id)
+              this.props.LoginFunc(res.data,[])
+          }).catch((err)=>{
+              toast.error(err.response.data.message, {
+                  position: "top-left",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  draggable: true,
+                  progress: undefined,
+              });
+          })
+        }else{
+          toast.error('confirmasi dan password harus sama', {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              draggable: true,
+              progress: undefined,
+          });
+      }
+  }else{
+      toast.error(this.checkpass(password1).message, {
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
       });
-    }
-    const newUserCredentials = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      passwordConfrim: this.state.passwordConfrim
-    };
-    console.log("this.props.newUserCredentials", newUserCredentials);
-    //dispath to userActions
-  };
+  }
+}
 
   render() {
     const { classes } = this.props;
+    console.log(this.props.Auth)
+        if(this.props.Auth.isLogin){
+            return <Redirect to='/'/>
+        };
     return (
       <Zoom>
 
@@ -84,10 +134,7 @@ class Registration extends Component {
             <div style={{color:"#eaf2f4", fontSize:"20px", textAlign:"center", marginTop:"20px", fontFamily:"inherit", marginBottom:"-20px"}}>
                 Sign Up to See Our Latest Products and Articles!
             </div>
-          <form
-            className={classes.form}
-            onSubmit={() => this.submitRegistration}
-          >
+          <form className={classes.form}>
             <FormControl required fullWidth margin="normal">
               <InputLabel className={classes.labels}>
                 Username
@@ -98,7 +145,7 @@ class Registration extends Component {
                 autoComplete="Username"
                 className={classes.inputs}
                 disableUnderline={true}
-                onChange={this.handleChange("username")}
+                inputRef={this.state.username}
               />
             </FormControl>
 
@@ -112,7 +159,7 @@ class Registration extends Component {
                 autoComplete="email"
                 className={classes.inputs}
                 disableUnderline={true}
-                onChange={this.handleChange("email")}
+                inputRef={this.state.email}
               />
             </FormControl>
 
@@ -125,7 +172,7 @@ class Registration extends Component {
                 autoComplete="password"
                 className={classes.inputs}
                 disableUnderline={true}
-                onChange={this.handleChange("password")}
+                inputRef={this.state.password}
                 type={this.state.hidePassword ? "password" : "input"}
                 endAdornment={
                   this.state.hidePassword ? (
@@ -159,7 +206,7 @@ class Registration extends Component {
                 className={classes.inputs}
                 disableUnderline={true}
                 onClick={this.state.showPassword}
-                onChange={this.handleChange("passwordConfrim")}
+                inputRef={this.state.confirmpass}
                 type={this.state.hidePassword ? "password" : "input"}
                 endAdornment={
                   this.state.hidePassword ? (
@@ -185,13 +232,12 @@ class Registration extends Component {
             
 
             <Button
-              disabled={!this.isValid()}
               disableRipple
               fullWidth
               variant="outlined"
               className={classes.button}
               type="submit"
-              onClick={this.submitRegistration}
+              onClick={this.OnRegisterClick}
             >
               Sign-Up
             </Button>
@@ -199,43 +245,6 @@ class Registration extends Component {
               Already Sign-Up? Login <Link to="/login"> Here </Link>
             </div>
           </form>
-          {/* <Button style={{marginTop:20}} variant='contained' color='primary'>
-              <FacebookIcon/>Sign in with Facebook
-          </Button> */}
-          {this.state.error ? (
-            <Snackbar
-              variant="error"
-              key={this.state.error}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right"
-              }}
-              open={this.state.errorOpen}
-              onClose={this.errorClose}
-              autoHideDuration={3000}
-            >
-              <SnackbarContent
-                className={classes.error}
-                message={
-                  <div>
-                    <span style={{ marginRight: "8px" }}>
-                      <ErrorIcon fontSize="large" color="error" />
-                    </span>
-                    <span> {this.state.error} </span>
-                  </div>
-                }
-                action={[
-                  <IconButton
-                    key="close"
-                    aria-label="close"
-                    onClick={this.errorClose}
-                  >
-                    <CloseIcon color="error" />
-                  </IconButton>
-                ]}
-              />
-            </Snackbar>
-          ) : null}
         </Paper>
       </div>
       </Zoom>
@@ -243,4 +252,10 @@ class Registration extends Component {
   }
 }
 
-export default withStyles(register)(Registration);
+const Mapstatetoprops=(state)=>{
+  return{
+      Auth:state.Auth
+  }
+}
+
+export default withStyles(register)(connect(Mapstatetoprops,{LoginFunc,LoginThunk,Clearfunc})(Registration));

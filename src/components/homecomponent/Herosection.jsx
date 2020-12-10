@@ -8,7 +8,7 @@ function Herosection() {
     <div className='hero-container'>
       <video src='/videos/video-1.mp4' autoPlay loop muted />
       {/* <img src='images/img-home.jpg'/> */}
-      <h1>Your Most Trusted Pharmacy</h1>
+      <h1 style={{textAlign:'center'}}>Your Most Trusted Pharmacy</h1>
       <p>What Are You Waiting For?</p>
       <div className='hero-btns'>
         <Link to='/Register'>

@@ -46,3 +46,21 @@ export const LoginThunk=(username,password)=>{
     }
 
 }
+
+export const KeepLogin=(username,password)=>{
+    return (dispatch)=>{
+        dispatch({type:'LOADING'})
+        Axios.post(`${API_URLbe}/auth/login`,{
+            username:username,
+            password:password
+        })
+        .then((res)=>{
+            localStorage.setItem('id',res.data.datauser.id)
+            dispatch({type:'LOGIN',payload:res.data.datauser})//backend
+        }).catch((err)=>{
+            dispatch({type:'Error',payload:err.response.data.message})
+        })
+
+    }
+
+}

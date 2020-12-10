@@ -72,9 +72,7 @@ return (
         <PeopleAltIcon className={classes.icon} />
         </Avatar>
         <form
-        className={classes.form}
-        onSubmit={() => this.submitRegistration}
-        >
+        className={classes.form}>
         <FormControl required fullWidth margin="normal">
             <InputLabel className={classes.labels}>
             Username
