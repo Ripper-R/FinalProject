@@ -83,6 +83,7 @@ OnRegisterClick=(e)=>{
               localStorage.setItem('id',res.data.id)
               this.props.LoginFunc(res.data,[])
           }).catch((err)=>{
+            console.log(err)
               toast.error(err.response.data.message, {
                   position: "top-left",
                   autoClose: 2000,

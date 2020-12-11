@@ -12,8 +12,8 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  const [anchorEl,setopen]=useState(null)
-  const [anchorElcart,setopencart]=useState(null)
+  // const [anchorEl,setopen]=useState(null)
+  // const [anchorElcart,setopencart]=useState(null)
 
   const Logoutbtn=()=>{
     localStorage.removeItem('id')

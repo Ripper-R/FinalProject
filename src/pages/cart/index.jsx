@@ -61,6 +61,7 @@ renderTotalprice=()=>{
 
 renderCart=()=>{
     return this.state.cart.map((val,index)=>{
+        console.log(this.state.cart)
         return(
             <TableRow key={index}>
                 <TableCell>{index+1}</TableCell>
@@ -301,7 +302,7 @@ render() {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={this.onBayarClick}>
+                        <Button className="nav-links-mobile" onClick={this.onBayarClick}>
                             Bayar
                         </Button>
                     </ModalFooter>
@@ -330,7 +331,7 @@ render() {
                                 </TableFooter>
                             </Table>
                         </TableContainer>
-                        <Button onClick={this.onCheckOutClick}>
+                        <Button className="nav-links-mobile" onClick={this.onCheckOutClick}>
                             CheckOut
                         </Button>
                     </Paper>
