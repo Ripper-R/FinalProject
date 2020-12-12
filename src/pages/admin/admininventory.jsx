@@ -8,7 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {MdDeleteForever} from 'react-icons/md'
-import {BiEdit,BiPlusCircle} from 'react-icons/bi'
+import {BiEdit,BiPlusCircle,BiInfoCircle} from 'react-icons/bi'
+import {AiFillInfoCircle} from 'react-icons/ai'
 import {priceFormatter, API_URL,API_URLbe} from './../../helper/idformat'
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios'
@@ -24,11 +25,12 @@ const useStyles = makeStyles(()=>({
     paper: {
       position: 'absolute',
       width: 500,
-      backgroundColor: 'white',
+      backgroundColor: '#279DC5',
       border: '2px solid #000',
       padding : 30,
       height:300
-    }
+    },
+    
   }));
   
 
@@ -62,19 +64,22 @@ const Admininventory=()=>{
       const classes = useStyles();
       
       const [addform,setaddform]=useState({
-        adder:'',
-        kimia:useRef(),
+        adder:useRef(),
+        kimia:'',
       
       })
+     
       const onhargachange=(e)=>{
         if(e.target.value===''){
-          setaddform({...addform,adder:0})
-        }
-        if(Number(e.target.value)){
-            if(addform.price === 0){
-                setaddform({...addform,adder:e.target.value[1]})
+          setaddform({...addform,kimia:0})
+          console.log(addform.kimia)
+        }if(Number(e.target.value)){
+            if(addform.kimia === 0){
+                setaddform({...addform,kimia:e.target.value[1]})
+                console.log(addform.kimia)
             }else{
-                setaddform({...addform,adder:e.target.value})    
+                setaddform({...addform,kimia:e.target.value})    
+                console.log(addform.kimia)
             }
         }
       }
@@ -93,16 +98,30 @@ const Admininventory=()=>{
         }
         fetch()
       },[])
+      
+      useEffect(()=>{
+        const fetch=()=>{
+          axios.get(`${API_URLbe}/product/getkimia`)
+          .then((res)=>{
+            console.log(res.data)
+            setinventor(res.data)
+            // seteditform({...editform,price:res.data[0].price})
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }
+        fetch()
+      })
 
    
       const OnAdddataClick=()=>{
-        var adder= addform.adder
-        var kimia = addform.kimia.current.value
+        var adder= addform.adder.current.value
+        var kimia = addform.kimia
         var data={
           adder:adder,
           kimia_id:kimia
         }
-   
+        console.log(data)
     axios.post(`${API_URLbe}/product/upadder`,data)
     .then((res)=>{
       console.log(res.data)
@@ -111,18 +130,36 @@ const Admininventory=()=>{
       console.log(err)
     })
   
-}
+    }
+
+const onclickdelete=(index)=>{
+ 
+  axios.delete(`${API_URLbe}/product/deleteinven/${index+1}`)
+} 
+    
 const bodyselect=()=>{
-  <div style={{}} className={classes.paper}>
-    <select>
-    {inventory.map((val,index)=>{
-    return (
-      <option value={val.kimia_id}>{val.kimia_id}</option>
-    )
-    })}
-      </select>
-      
-      </div>
+  console.log(addform.kimia)
+  return(
+    
+    <div style={{textAlign:'center'}} className={classes.paper}>
+
+      Pick Chemical 
+      <select value={addform.kimia} onChange={(e)=>onhargachange(e)}>
+      {inventory.map((val,index)=>{
+      return (
+        <option value={val.kimia_id}>{val.nama}</option>
+      )
+      })}
+        </select>
+        <div>
+        <input type='text' ref={addform.adder} placeholder='tambah brp?' className='form-control mb-2'/>
+        </div>
+          <div>
+            <button onClick={()=>OnAdddataClick()}>add stock</button>
+          </div>
+        </div>
+    ) 
+    
     }
   
 
@@ -141,9 +178,7 @@ return inventory.map((val,index)=>{
       <div>
       Stock : {val.sum}
       </div>
-      <div>
-        <button onClick={()=>OnAdddataClick()}>add stock</button>
-      </div>
+      
    </div>
   )
 })
@@ -162,9 +197,9 @@ return inventory.map((val,index)=>{
                
                
                 <TableCell>
-                  <span style={{fontSize:30}} className='text-danger mr-3'><MdDeleteForever/></span>
+                  <span style={{fontSize:30}} className='text-danger mr-3' onClick={()=>onclickdelete(index)}><MdDeleteForever/></span>
                   {/* <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>   */}
-                  <span style={{fontSize:30}}  className='text-primary ml-3' onClick={()=>handleOpen(index)}><BiPlusCircle/></span>  
+                  <span style={{fontSize:30}}  className='text-primary ml-3' onClick={()=>handleOpen(index)}><BiInfoCircle/></span>  
                 </TableCell>
             </TableRow>
           )
@@ -237,7 +272,7 @@ return inventory.map((val,index)=>{
                 </TableContainer>
               </Paper>
               <div>
-                <Button onClick={handleOpense}>add data</Button>
+                <Button onClick={handleOpense} buttonStyle="btn--outline" buttonSize="btn-medium">add Stock</Button>
               </div>
           </div>
         </>
