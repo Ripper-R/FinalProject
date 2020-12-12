@@ -85,6 +85,7 @@ function StickyHeadTable(props) {
   })
   const [indexedit,setindexedit]=useState(0)
   const [product,setProduct]=useState([])
+  const [prodmodal,setProductmodal]=useState([])
 
 
   useEffect(()=>{
@@ -99,7 +100,17 @@ function StickyHeadTable(props) {
         console.log(err)
       })
     }
+    const fetch2=()=>{
+      axios.get(`${API_URLbe}/product/getprodetail`)
+      .then((res)=>{
+        console.log(res.data)
+        setProductmodal(res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
     fetch()
+    fetch2()
   },[])
 
   const oninputfilechange=(e)=>{
@@ -294,13 +305,49 @@ function StickyHeadTable(props) {
       <Button color="secondary" onClick={()=>handleClose()}>Cancel</Button>
     </div>
   );
+  // const bodyselect=()=>{
+  //   console.log(addform.kimia)
+  //   return(
+      
+  //     <div style={{textAlign:'center'}} className={classes.paper}>
+  
+  //       Pick Chemical 
+  //       <select value={addform.kimia} onChange={(e)=>onhargachange(e)}>
+  //       {inventory.map((val,index)=>{
+  //       return (
+  //         <option value={val.kimia_id}>{val.nama}</option>
+  //       )
+  //       })}
+  //         </select>
+  //         <div>
+  //         <input type='text' ref={addform.adder} placeholder='tambah brp?' className='form-control mb-2'/>
+  //         </div>
+  //           <div>
+  //             <button onClick={()=>OnAdddataClick()}>add stock</button>
+  //           </div>
+  //         </div>
+  //     ) 
+      
+  //     }
 
   const bodykim = (
     <div  className={classes.paper}>
       <div>
-           <input type='text' ref={addformkim.product_id} placeholder='product ke??' className='form-control mb-2'/>
+      <select ref={addform.product_id}>
+        {prodmodal.map((val,index)=>{
+        return (
+          <option value={val.product_id}>{val.nama}</option>
+        )
+        })}
+          </select>
                  <div>
-            <input type='text' ref={addformkim.kimia_id} placeholder='kimia id'  className='form-control mb-2'/>
+                  <select ref={addform.kimia_id}>
+                    {prodmodal.map((val,index)=>{
+                    return (
+                      <option value={val.kimia_id}>{val.kimia_id}</option>
+                    )
+                    })}
+                  </select>
                  </div>
             <input type='text' ref={addformkim.dosis} placeholder='dosis'/>
         </div>

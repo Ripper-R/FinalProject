@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import Axios from 'axios'
 import {Button} from './../components/homecomponent/Button'
+import {API_URLbe} from './../helper/idformat'
 
 const Proddetails=(props)=>{
 
@@ -18,6 +19,102 @@ const Proddetails=(props)=>{
         })
     },[])
 
+    const [addqty,setqty]=useState({
+        qty:''
+    })
+
+    const onhargachange=(e)=>{
+        if(e.target.value===''){
+          setqty({...addqty,qty:0})
+          console.log(addqty.qty)
+        }if(Number(e.target.value)){
+            if(addqty.qty === 0){
+                setqty({...addqty,qty:e.target.value[1]})
+                console.log(addqty.qty)
+            }else{
+                setqty({...addqty,qty:e.target.value})    
+                console.log(addqty.qty)
+            }
+        }
+      }
+   const onAddToCart=()=>{
+        if(props.role==='admin'){
+            alert('jangan beli bro inget admin')
+        }else if(props.role==='user'){
+            if(addqty.qty){
+                Axios.post(`${API_URLbe}/trans/Addtocart`,{
+                    userid:props.id,
+                    productid:Prod.id,
+                    qty:addqty.qty
+                    
+                },{
+                    headers:{
+                        'Authorization':`Bearer ${this.props.token}`
+                    },
+                }).then((res)=>{
+                    props.AddcartAction(res.data)
+                    alert('berhasil masuk cart')
+                    console.log(res.data)
+                }).catch((err)=>{
+                    console.log(err)
+                    alert(err)
+                })
+                // console.log(this.state.products.id)
+                // Axios.get(`${API_URL}/carts`,{
+                //     params:{
+                //         userId:this.props.id,
+                //         productId:this.state.products.id
+                //     }
+                // }).then((res)=>{
+                //     if(res.data.length){
+                //         console.log(res.data)
+                //         Axios.patch(`${API_URL}/carts/${res.data[0].id}`,{
+                //             qty:parseInt(this.state.qty.current.value) + parseInt(res.data[0].qty)
+                //         }).then(()=>{
+                //             Axios.get(`${API_URL}/carts`,{
+                //                 params:{
+                //                     userId:this.props.id,
+                //                     _expand:'product'
+                //                 }
+                //             }).then((res1)=>{
+                //                 this.props.AddcartAction(res1.data)
+                //                 alert('berhasil masuk cart')
+                //             }).catch((err)=>{
+                //                 console.log(err)
+                //             })
+                //         }).catch((err)=>{
+                //             console.log(err)
+                //         })
+                //     }else{
+                //         Axios.post(`${API_URL}/carts`,{
+                //             userId:this.props.id,
+                //             productId:this.state.products.id,
+                //             qty: parseInt(this.state.qty.current.value)
+                //         }).then(()=>{
+                //             Axios.get(`${API_URL}/carts`,{
+                //                 params:{
+                //                     userId:this.props.id,
+                //                     _expand:'product'
+                //                 }
+                //             }).then((res)=>{
+                //                 this.props.AddcartAction(res.data)
+                //                 alert('berhasil masuk cart')
+                //             }).catch((err)=>{
+                //                 console.log(err)
+                //             })
+                //         })
+
+                //     }
+                // }).catch((err)=>{
+                //     console.log(err)
+                // })
+            }else{
+                alert('salah broo harusnya qty disii');
+            }
+        }else{
+            alert('berhasil')
+        }
+    }
  return(
      <div style={{width:'100%',height:'100%'}}>
         <div style={{width:'100%',height:500,display:'flex',justifyContent:'center',alignItems:'center'}}>
@@ -37,7 +134,10 @@ const Proddetails=(props)=>{
                             deskripsi : {Prod.deskripsi}
                         </div>
                         <div>
-                            <Button>Add to CART</Button>
+                            <input type='number' value={addqty.qty} onChange={(e)=>onhargachange(e)} />
+                        </div>
+                        <div>
+                            <Button onClick={()=>onAddToCart()}>Add to CART</Button>
                         </div>
 
 
