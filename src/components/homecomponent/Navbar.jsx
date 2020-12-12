@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import {connect} from 'react-redux'
 import {LogOutfunc} from '../../redux/actions'
+import Badge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core/styles';
 
 const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
   const [click, setClick] = useState(false);
@@ -20,6 +22,11 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
     LogOutfunc()
   }
 
+  const Logoutmobile = () =>{
+    Logoutbtn ()
+    closeMobileMenu()
+  }
+
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -34,6 +41,17 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
 
   window.addEventListener("resize", showButton);
 
+  const StyledBadge = withStyles(() => ({
+    badge: {
+      right: -3,
+      top: 3,
+      color:'white',
+      fontSize:11,
+      background: '#F06262',
+      
+      padding: '0 0px',
+    },
+  }))(Badge);
   
 
   return (
@@ -42,7 +60,7 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             DrugStore
-            <i className="fas fa-prescription-bottle-alt"></i>
+            <i className="fas fa-prescription-bottle-alt" ></i>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
@@ -84,7 +102,11 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-              <i class="fas fa-cart-plus"></i>
+              <StyledBadge badgeContent={cart.length} color='secondary' >
+                <span style={{fontSize:20}}>
+                <i class="fas fa-cart-plus"></i>
+                </span>
+              </StyledBadge>
               </Link>
             </li>
               :
@@ -108,11 +130,11 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
 
             {isLogin?
               <Link
-                to="/login"
+                to="/"
                 className="nav-links-mobile"
-                onClick={closeMobileMenu, Logoutbtn}
+                onClick={Logoutmobile}
               >
-                Log-Out
+                Log-Outs
               </Link>
               :
               <Link
@@ -127,7 +149,7 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
               
           {
           isLogin?
-          button && <Button onClick={Logoutbtn} buttonStyle="btn--outline">Log-Out</Button>
+          button && <Link to='/' className='btn-mobile'><Button onClick={Logoutbtn} buttonStyle="btn--outline">Log-Out</Button></Link>
           :
           button && <Link to='/login' className='btn-mobile'><Button buttonStyle="btn--outline">Log-In</Button></Link>
           }

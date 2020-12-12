@@ -7,6 +7,7 @@ import Zoom from 'react-reveal/Zoom';
 
 
 const Adminpage=()=>{
+    
     return(
 <Zoom>
 

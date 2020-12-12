@@ -115,6 +115,10 @@ OnRegisterClick=(e)=>{
   }
 }
 
+showPassword = () => {
+  this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
+  };
+
   render() {
     const { classes } = this.props;
     console.log(this.props.Auth)
