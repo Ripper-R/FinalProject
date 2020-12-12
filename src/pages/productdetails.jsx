@@ -5,19 +5,20 @@ import {API_URLbe} from './../helper/idformat'
 
 const Proddetails=(props)=>{
 
-    const [Prod,setProd]=useState({})
-    
-    useEffect(()=>{
-        Axios.get(`http://localhost:8080/product/getproduct/${props.match.params.id}`)
-        
-        .then((res)=>{
-            console.log(res.data)
-            setProd(res.data.dataprod)
-        })
-        .catch((res)=>{
+const [Prod,setProd]=useState({})
 
-        })
-    },[])
+useEffect(()=>{
+    Axios.get(`http://localhost:8080/product/getproduct/${props.match.params.id}`)
+    
+    .then((res)=>{
+        console.log(res.data)
+        setProd(res.data.dataprod)
+    })
+    .catch((res)=>{
+
+    })
+},[])
+
 
     const [addqty,setqty]=useState({
         qty:''
@@ -59,55 +60,6 @@ const Proddetails=(props)=>{
                     console.log(err)
                     alert(err)
                 })
-                // console.log(this.state.products.id)
-                // Axios.get(`${API_URL}/carts`,{
-                //     params:{
-                //         userId:this.props.id,
-                //         productId:this.state.products.id
-                //     }
-                // }).then((res)=>{
-                //     if(res.data.length){
-                //         console.log(res.data)
-                //         Axios.patch(`${API_URL}/carts/${res.data[0].id}`,{
-                //             qty:parseInt(this.state.qty.current.value) + parseInt(res.data[0].qty)
-                //         }).then(()=>{
-                //             Axios.get(`${API_URL}/carts`,{
-                //                 params:{
-                //                     userId:this.props.id,
-                //                     _expand:'product'
-                //                 }
-                //             }).then((res1)=>{
-                //                 this.props.AddcartAction(res1.data)
-                //                 alert('berhasil masuk cart')
-                //             }).catch((err)=>{
-                //                 console.log(err)
-                //             })
-                //         }).catch((err)=>{
-                //             console.log(err)
-                //         })
-                //     }else{
-                //         Axios.post(`${API_URL}/carts`,{
-                //             userId:this.props.id,
-                //             productId:this.state.products.id,
-                //             qty: parseInt(this.state.qty.current.value)
-                //         }).then(()=>{
-                //             Axios.get(`${API_URL}/carts`,{
-                //                 params:{
-                //                     userId:this.props.id,
-                //                     _expand:'product'
-                //                 }
-                //             }).then((res)=>{
-                //                 this.props.AddcartAction(res.data)
-                //                 alert('berhasil masuk cart')
-                //             }).catch((err)=>{
-                //                 console.log(err)
-                //             })
-                //         })
-
-                //     }
-                // }).catch((err)=>{
-                //     console.log(err)
-                // })
             }else{
                 alert('salah broo harusnya qty disii');
             }

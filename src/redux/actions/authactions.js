@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { API_URLbe } from '../../helper/idformat'
 // import {ADDCART} from './../Type'
 export const LoginFunc=(user,cart)=>{
+    // console.log(user)
     return{
         type:'LOGIN',
         payload:user,
@@ -20,12 +21,12 @@ export const LogOutfunc=()=>{
         type:'LOGOUT'
     }
 }
-// export const AddcartAction=(cart)=>{
-//     return{
-//         type:ADDCART,
-//         cart:cart
-//     }
-// }
+export const AddcartAction=(cart)=>{
+    return{
+        type:'ADDCART',
+        cart:cart
+    }
+}
 
 
 export const LoginThunk=(username,password)=>{
@@ -45,3 +46,21 @@ export const LoginThunk=(username,password)=>{
     }
 
 }
+
+// export const KeepLogin=(username,password)=>{
+//     return (dispatch)=>{
+//         dispatch({type:'LOADING'})
+//         Axios.post(`${API_URLbe}/auth/login`,{
+//             username:username,
+//             password:password
+//         })
+//         .then((res)=>{
+//             localStorage.getItem('id',res.data.datauser.id)
+//             dispatch({type:'LOGIN',payload:res.data.datauser})//backend
+//         }).catch((err)=>{
+//             dispatch({type:'Error',payload:err.response.data.message})
+//         })
+
+//     }
+
+// }

@@ -1,13 +1,13 @@
 import React from 'react';
 import '../App.css';
 import Cards from '../components/homecomponent/Cards';
-import SectionUtama from '../components/homecomponent/SectionUtama';
+import Herosection from '../components/homecomponent/Herosection';
 import Footer from '../components/homecomponent/Footer';
 // import {Route} from 'react-router-dom'
 function Home() {
   return (
     <>
-      <SectionUtama />
+      <Herosection />
       <Cards />
       <Footer/>
     </>
