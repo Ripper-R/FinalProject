@@ -13,11 +13,35 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import { Button } from "../../components/homecomponent/Button";
-import {Modal,ModalHeader,ModalBody,ModalFooter,CustomInput} from 'reactstrap'
+// import {Modal,ModalHeader,ModalBody,ModalFooter,CustomInput} from 'reactstrap'
 import {AddcartAction} from '../../redux/actions'
 import { Zoom } from 'react-reveal/Zoom'
+import Modal from '@material-ui/core/Modal';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
+
+
+const useStyles = theme =>({
+    root: {
+      width: '100%',
+    },
+    container: {
+      maxHeight: 440,
+    },
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: 'white',
+      border: '2px solid #000',
+      padding: 10,
+      height :300,
+      marginTop:100,
+      marginLeft:'30%'
+    }
+  });
 
 class Cart extends Component {
+    
+
 state = {
     cart:[],
     isOpen:false,
@@ -26,6 +50,7 @@ state = {
     cc:createRef(),
     idtrans:0,
     buktitrans:null,
+    isClose:false
 
 }
 componentDidMount(){
@@ -57,6 +82,7 @@ renderTotalprice=()=>{
     var total=this.state.cart.reduce((total,num)=>{
         return total+(num.price*num.qty)
     },0)
+    console.log(total)
     return total
 }
 
@@ -141,37 +167,56 @@ onbayarpakebukti=()=>{
 onCheckOutClick=()=>{
     this.setState({isOpen:true})
 }
+body=()=>{
+    const{classes}=this.props
+    return(
+
+    <div className={classes.paper}>
+        Pembayaran
+        <div>
+            <select onChange={(e)=>this.setState({pilihan:e.target.value})} className='form-control' defaultValue={0} >
+                      <option value="0" hidden>Select payment</option>
+                      <option value="1">input bukti transfer</option>
+                      <option value="2">Credit card</option>
+            </select>
+                     {
+                          this.state.pilihan==2?
+                          <input className='form-control' ref={this.state.cc} placeholder='masukkan cc'/>
+                          :
+                         this.state.pilihan==1?
+                         <input className='form-control' onChange={this.oninputfilechange} type='file'   label={this.state.buktitrans?this.state.buktitrans.name:'Select bukti'}/>
+                         :
+                         null
+                    }
+             <div>
+                Total price  {priceFormatter(this.renderTotalprice())}
+            </div>
+            <div>
+            <Button className="nav-links-mobile" onClick={()=>this.onBayarClick}>
+                            Bayar
+            </Button>
+            </div>
+        </div>
+    </div>
+    )
+}
+    
+
 
 render() {
+    const {classes}=this.props;
     if(this.props.role==='user') {
         return (
             <div>
-                <Modal style={{marginTop:80}} isOpen={this.state.isOpen} toggle={()=>this.setState({isOpen:false})}>
-                    <ModalHeader toggle={()=>this.setState({isOpen:false})}>Pembayaran</ModalHeader>
-                    <ModalBody>
-                        <select onChange={(e)=>this.setState({pilihan:e.target.value})} className='form-control' defaultValue={0} >
-                            <option value="0" hidden>Select payment</option>
-                            <option value="1">input bukti transfer</option>
-                            <option value="2">Credit card</option>
-                        </select>
-                        {
-                            this.state.pilihan==2?
-                            <input className='form-control' ref={this.state.cc} placeholder='masukkan cc'/>
-                            :
-                            this.state.pilihan==1?
-                            <CustomInput className='form-control' onChange={this.oninputfilechange} type='file'   label={this.state.buktitrans?this.state.buktitrans.name:'Select bukti'}/>
-                            :
-                            null
-                        }
-                        <div>
-                            Total price  {priceFormatter(this.renderTotalprice())}
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button className="nav-links-mobile" onClick={this.onBayarClick}>
-                            Bayar
-                        </Button>
-                    </ModalFooter>
+                <Modal
+                 open={this.state.isOpen}
+                 onClose={this.state.isClose}
+                 aria-labelledby="simple-modal-title"
+                 aria-describedby="simple-modal-description"
+                >
+                    
+                    {this.body()}
+                    
                 </Modal>
                 <div className=' pt-3 martgintop' style={{paddingLeft:'10%',paddingRight:'10%', marginTop:50}}>
                     <Paper >
@@ -216,4 +261,4 @@ return {
     ...Auth
 }
 }
-export default connect(MapstatetoProps,{AddcartAction})(Cart);
+export default connect(MapstatetoProps,{AddcartAction})(withStyles(useStyles)(Cart));
