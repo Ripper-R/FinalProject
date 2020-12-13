@@ -167,6 +167,9 @@ onbayarpakebukti=()=>{
 onCheckOutClick=()=>{
     this.setState({isOpen:true})
 }
+onCheckClick=()=>{
+    this.setState({isOpen:false})
+}
 body=()=>{
     const{classes}=this.props
     return(
@@ -210,7 +213,7 @@ render() {
             <div>
                 <Modal
                  open={this.state.isOpen}
-                 onClose={this.state.isClose}
+                 onClose={this.onCheckClick}
                  aria-labelledby="simple-modal-title"
                  aria-describedby="simple-modal-description"
                 >
