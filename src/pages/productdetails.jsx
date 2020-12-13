@@ -2,7 +2,8 @@ import React,{useEffect,useState} from 'react';
 import Axios from 'axios'
 import {Button} from './../components/homecomponent/Button'
 import {API_URLbe} from './../helper/idformat'
-
+import {connect} from 'react-redux'
+import {AddcartAction} from './../redux/actions'
 const Proddetails=(props)=>{
 
 const [Prod,setProd]=useState({})
@@ -39,9 +40,11 @@ useEffect(()=>{
         }
       }
    const onAddToCart=()=>{
+    console.log(props.role)
         if(props.role==='admin'){
             alert('jangan beli bro inget admin')
         }else if(props.role==='user'){
+            
             if(addqty.qty){
                 Axios.post(`${API_URLbe}/trans/Addtocart`,{
                     userid:props.id,
@@ -50,7 +53,7 @@ useEffect(()=>{
                     
                 },{
                     headers:{
-                        'Authorization':`Bearer ${this.props.token}`
+                        'Authorization':`Bearer ${props.token}`
                     },
                 }).then((res)=>{
                     props.AddcartAction(res.data)
@@ -64,7 +67,7 @@ useEffect(()=>{
                 alert('salah broo harusnya qty disii');
             }
         }else{
-            alert('berhasil')
+            alert('Login Dlu bro')
         }
     }
  return(
@@ -99,5 +102,9 @@ useEffect(()=>{
      </div>
  )   
 }
-
-export default Proddetails
+const MapstatetoProps=({Auth})=>{
+    return {
+        ...Auth
+    }
+}
+export default connect(MapstatetoProps,{AddcartAction}) (Proddetails);
