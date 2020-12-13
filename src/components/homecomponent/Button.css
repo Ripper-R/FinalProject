@@ -17,7 +17,7 @@
 }
 
 .btn--background {
-  background-color: red;
+  background: rgb(92, 166, 226);
   color: #ffff;
   border: 1px solid black;
 }
@@ -45,5 +45,12 @@
   transition: all 0.3s ease-out;
   background: #fff;
   color: #242424;
+  transition: 250ms;
+}
+
+.btn--background:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: rgb(92, 166, 226);
   transition: 250ms;
 }

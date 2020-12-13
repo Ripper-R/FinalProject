@@ -15,6 +15,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import { Button } from "../../components/homecomponent/Button";
 import {Modal,ModalHeader,ModalBody,ModalFooter,CustomInput} from 'reactstrap'
 import {AddcartAction} from '../../redux/actions'
+import { Zoom } from 'react-reveal/Zoom'
 
 class Cart extends Component {
 state = {
@@ -113,51 +114,6 @@ onbayarpakeCC=()=>{
     }).catch(err=>{
         console.log(err)
     })
-    // Axios.post(`${API_URL}/transactions`,{
-    //     status:'Completed',
-    //     userId:this.props.id,
-    //     tanggalPembayaran:new Date().getTime(),
-    //     metode:'cc',
-    //     buktipembayaran:this.state.cc.current.value
-    // }).then((res)=>{
-    //     var arr=[]
-    //     this.state.cart.forEach((val)=>{
-    //         arr.push(Axios.post(`${API_URL}/transactionsdetails`,{
-    //             transactionId:res.data.id,
-    //             productId:val.productId,
-    //             price: parseInt(val.product.harga),
-    //             qty:val.qty
-    //         }))
-    //     })
-    //     Axios.all(arr).then((res1)=>{
-    //         var deletearr=[]
-    //         this.state.cart.forEach((val)=>{
-    //             deletearr.push(Axios.delete(`${API_URL}/carts/${val.id}`))
-    //         })
-    //         Axios.all(deletearr)
-    //         .then(()=>{
-    //             Axios.get(`${API_URL}/carts`,{
-    //                 params:{
-    //                     userId:this.props.id,
-    //                     _expand:'product'
-    //                 }
-    //             })
-    //             .then((res3)=>{
-    //                 console.log(res3.data)
-    //                 this.props.AddcartAction([])
-    //                 this.setState({cart:res3.data,isOpen:false})
-    //             }).catch((err)=>{
-    //                 console.log(err)
-    //             })
-    //         }).catch((Err)=>{
-    //             console.log(Err)
-    //         })
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }).catch((err)=>{
-
-    // })
 }
 onbayarpakebukti=()=>{
     var formData=new FormData()
@@ -181,99 +137,9 @@ onbayarpakebukti=()=>{
     }).catch((err)=>{
         console.log(err)
     })
-
-
-    // Axios.post(`${API_URL}/transactions`,{
-    //     status:'WaitingAdmin',
-    //     userId:this.props.id,
-    //     tanggalPembayaran:new Date().getTime(),
-    //     metode:'upload',
-    //     buktipembayaran:this.state.bukti.current.value
-    // }).then((res)=>{
-    //     var arr=[]
-    //     this.state.cart.forEach((val)=>{
-    //         arr.push(Axios.post(`${API_URL}/transactionsdetails`,{
-    //             transactionId:res.data.id,
-    //             productId:val.productId,
-    //             price: parseInt(val.product.harga),
-    //             qty:val.qty
-    //         }))
-    //     })
-    //     Axios.all(arr).then((res1)=>{
-    //         var deletearr=[]
-    //         this.state.cart.forEach((val)=>{
-    //             deletearr.push(Axios.delete(`${API_URL}/carts/${val.id}`))
-    //         })
-    //         Axios.all(deletearr)
-    //         .then(()=>{
-    //             Axios.get(`${API_URL}/carts`,{
-    //                 params:{
-    //                     userId:this.props.id,
-    //                     _expand:'product'
-    //                 }
-    //             })
-    //             .then((res3)=>{
-    //                 console.log(res3.data)
-    //                 this.props.AddcartAction([])
-    //                 this.setState({cart:res3.data,isOpen:false})
-    //             }).catch((err)=>{
-    //                 console.log(err)
-    //             })
-    //         }).catch((Err)=>{
-    //             console.log(Err)
-    //         })
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }).catch((err)=>{
-
-    // })
 }
 onCheckOutClick=()=>{
     this.setState({isOpen:true})
-    // Axios.post(`${API_URL}/transactions`,{
-    //     status:'WaitingPayment',
-    //     checkoutDate:new Date().getTime(),
-    //     userId:this.props.id,
-    //     tanggalPembayaran:''
-    // }).then((res)=>{
-    //     var arr=[]
-    //     this.state.cart.forEach((val)=>{
-    //         arr.push(Axios.post(`${API_URL}/transactionsdetails`,{
-    //             transactionId:res.data.id,
-    //             productId:val.productId,
-    //             price: parseInt(val.product.harga),
-    //             qty:val.qty
-    //         }))
-    //     })
-    //     Axios.all(arr).then((res1)=>{
-    //         var deletearr=[]
-    //         this.state.cart.forEach((val)=>{
-    //             deletearr.push(Axios.delete(`${API_URL}/carts/${val.id}`))
-    //         })
-    //         Axios.all(deletearr)
-    //         .then(()=>{
-    //             Axios.get(`${API_URL}/carts`,{
-    //                 params:{
-    //                     userId:this.props.id,
-    //                     _expand:'product'
-    //                 }
-    //             })
-    //             .then((res3)=>{
-    //                 console.log(res3.data)
-    //                 this.setState({cart:res3.data})
-    //             }).catch((err)=>{
-    //                 console.log(err)
-    //             })
-    //         }).catch((Err)=>{
-    //             console.log(Err)
-    //         })
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }).catch((err)=>{
-
-    // })
 }
 
 render() {
@@ -307,7 +173,7 @@ render() {
                         </Button>
                     </ModalFooter>
                 </Modal>
-                <div className=' pt-3 martgintop' style={{paddingLeft:'10%',paddingRight:'10%'}}>
+                <div className=' pt-3 martgintop' style={{paddingLeft:'10%',paddingRight:'10%', marginTop:50}}>
                     <Paper >
                         <TableContainer >
                             <Table stickyHeader>
@@ -331,7 +197,7 @@ render() {
                                 </TableFooter>
                             </Table>
                         </TableContainer>
-                        <Button className="nav-links-mobile" onClick={this.onCheckOutClick}>
+                        <Button buttonStyle='btn--background' buttonSize='btn--medium' onClick={this.onCheckOutClick}>
                             CheckOut
                         </Button>
                     </Paper>
