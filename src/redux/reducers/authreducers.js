@@ -15,6 +15,8 @@ const reducers=(state=INITIAL_STATE,action)=>{
             return INITIAL_STATE
         case 'CLEAR':
             return{...state,error:''}
+        case 'ADDCART':
+            return{...state,cart:action.cart}
         default:
             return state
     }

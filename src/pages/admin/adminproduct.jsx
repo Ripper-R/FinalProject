@@ -1,5 +1,5 @@
 import React, {useState,useRef, useEffect} from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -10,7 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {MdDeleteForever} from 'react-icons/md'
 import {BiEdit,BiPlusCircle} from 'react-icons/bi'
-// import { Button, Modal, ModalHeader, ModalBody, ModalFooter,CustomInput } from 'reactstrap';
 import {priceFormatter, API_URL,API_URLbe} from './../../helper/idformat'
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios'
@@ -38,8 +37,9 @@ const useStyles = makeStyles((theme)=>({
 function StickyHeadTable(props) {
   const classes = useStyles();
   const [modal, setModal] = useState(false);
-  const [modaledit, setModaledit] = useState(false);
-
+  // const [modaledit, setModaledit] = useState(false);
+  
+  const [idproductselect,setidproductselect]=useState(0)//harusnya id productselect
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -49,10 +49,22 @@ function StickyHeadTable(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const [kimia, setKimia] = React.useState(false);
+
+  const handleOpenkim = () => {
+    setKimia(true);
+    // setidproductselect(index)
+
+  };
+
+  const handleClosekim = () => {
+    setKimia(false);
+  };
 
   const [modalfoto,setmodalfoto]=useState(false)
-  const [fotos,setfotos]=useState([null])
-  const [idproductselect,setidproductselect]=useState(0)//harusnya id productselect
+  // const [fotos,setfotos]=useState([null])
+  const [product,setProduct]=useState([])
+  const [prodmodal,setProductmodal]=useState([])
 
   const [banner,setbanner]=useState(null)
 
@@ -62,14 +74,19 @@ function StickyHeadTable(props) {
     deskripsi:useRef(),
   
   })
-  const [editform,seteditform]=useState({
-    nama:useRef(),
-    gambar:useRef(),
-    price:'',
-    deskripsi:useRef()
+  const [addformkim,setaddformkim]=useState({
+    product_id:useRef(),
+    kimia_id:useRef(),
+    dosis:useRef(),
+  
   })
-  const [indexedit,setindexedit]=useState(0)
-  const [product,setProduct]=useState([])
+  // const [editform,seteditform]=useState({
+  //   nama:useRef(),
+  //   gambar:useRef(),
+  //   price:'',
+  //   deskripsi:useRef()
+  // })
+  // const [indexedit,setindexedit]=useState(0)
 
 
   useEffect(()=>{
@@ -79,13 +96,29 @@ function StickyHeadTable(props) {
       .then((res)=>{
         console.log(res.data)
         setProduct(res.data)
-        seteditform({...editform,price:res.data[0].price})
+        // seteditform({...editform,price:res.data[0].price})
       }).catch((err)=>{
         console.log(err)
       })
     }
-    fetch()
+    const fetch2=()=>{
+          axios.get(`${API_URLbe}/product/getprodetail`)
+          .then((res)=>{
+            console.log(res.data)
+            setProductmodal(res.data)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }
+        fetch()
+        fetch2()
+    
   },[])
+  
+  // useEffect(()=>{
+  //   
+  //  
+  // })
 
   const oninputfilechange=(e)=>{
     console.log(e.target.files)
@@ -95,24 +128,6 @@ function StickyHeadTable(props) {
     }else{
         
         setbanner(null)
-    }
-  }
-
-  
-
-  const oninputfilefotochange=(e,index)=>{
-    console.log(e.target.files)
-    if(e.target.files[0]){
-        console.log(e.target.files[0])
-        let foto=fotos
-        foto.splice(index,1,e.target.files[0])
-        setfotos([...foto])
-    }else{
-      // codingan ini bissa buat hapus foto yang ada
-        console.log('hapus')
-        let foto=fotos
-        foto.splice(index,1,null)
-        setfotos([...foto])
     }
   }
 
@@ -128,19 +143,19 @@ function StickyHeadTable(props) {
         }
     }
   }
-  const onhargachangeedit=(e)=>{
-    console.log(e.target.value)
-    if(e.target.value===''){
-      seteditform({...editform,harga:0})
-    }
-    if(Number(e.target.value)){
-        if(editform.harga===0){
-          seteditform({...editform,price:e.target.value[1]})
-        }else{
-          seteditform({...editform,price:e.target.value})    
-        }
-    }
-  }
+  // const onhargachangeedit=(e)=>{
+  //   console.log(e.target.value)
+  //   if(e.target.value===''){
+  //     seteditform({...editform,price:0})
+  //   }
+  //   if(Number(e.target.value)){
+  //       if(editform.price===0){
+  //         seteditform({...editform,price:e.target.value[1]})
+  //       }else{
+  //         seteditform({...editform,price:e.target.value})    
+  //       }
+  //   }
+  // }
 
   
   const readMore=(kata='')=>{
@@ -172,7 +187,7 @@ function StickyHeadTable(props) {
       price:price,
       deskripsi:deskripsi
     }
-
+    console.log(data)
     formData.append('image',banner)
     formData.append('data',JSON.stringify(data))
       axios.post(`${API_URLbe}/product/Addproduct`,formData,options)
@@ -184,70 +199,76 @@ function StickyHeadTable(props) {
       })
     
   }
-
-
-  const onAddphotoprod=()=>{
-    var formData=new FormData()
-    var options={
-        headers:{
-          'Content-type':'multipart/form-data',
-        }
+  const OnAdddataClickkim=()=>{
+  
+    var product_id = addformkim.product_id.current.value
+    console.log(product_id)
+    var kimiaid=addformkim.kimia_id.current.value
+    console.log(kimiaid)
+    var dosis=addformkim.dosis.current.value
+    console.log(dosis)
+    var data={
+      product_id:product_id,
+      kimia_id:kimiaid,
+      dosis:dosis
     }
-    fotos.forEach((val)=>{
-      formData.append('image',val)
-    })
-    formData.append('data',JSON.stringify({product_id:idproductselect}))
-    axios.post(`${API_URLbe}/product/Addproductfoto`,formData,options)
-    .then((res)=>{
-      console.log(res.data)
-      alert('berhasil')
-    }).catch((err)=>{
-      console.log(err)
-    })
-   
+    console.log(data)
+      
+      axios.post(`${API_URLbe}/product/adddosis`,data)
+      .then((res)=>{
+        console.log(res.data)
+        alert('berhasil')
+      }).catch((err)=>{
+        console.log(err)
+      })
+    
   }
+
+
+
   // useEffect(()=>{
   //   if(product.length){
   //     seteditform({...editform,harga:product[indexedit].harga})
   //   }
   // },[indexedit])
 
-  const Oneditclick= (index)=>{
-    setindexedit(index)
-    seteditform({...editform,harga:product[index].harga})
-    setModaledit(true)
-    // setTimeout(() => {
-    // }, 1000);
-  }
+  // const Oneditclick= (index)=>{
+  //   setindexedit(index)
+  //   seteditform({...editform,price:product[index].price})
+  //   setModaledit(true)
+  //   // setTimeout(() => {
+  //   // }, 1000);
+  // }
 
-  const onSaveeditClick =(id)=>{
-    // var namatrip = editform.namaTrip.current.value
-    // var gambar = editform.gambar.current.value
-    // var tanggalmulai=editform.tanggalmulai.current.value
-    // var tanggalberakhir=editform.tanggalberakhir.current.value
-    // var harga=editform.harga
-    // var deskripsi=editform.descripsi.current.value
-    // var obj={
-    //   namatrip,
-    //   gambar,
-    //   tanggalmulai:new Date(tanggalmulai).getTime(),
-    //   tanggalberakhir:new Date(tanggalberakhir).getTime(),
-    //   harga,
-    //   deskripsi
-    // }
+  // const onSaveeditClick =(id)=>{
+  //   // var namatrip = editform.namaTrip.current.value
+  //   // var gambar = editform.gambar.current.value
+  //   // var tanggalmulai=editform.tanggalmulai.current.value
+  //   // var tanggalberakhir=editform.tanggalberakhir.current.value
+  //   // var harga=editform.harga
+  //   // var deskripsi=editform.descripsi.current.value
+  //   // var obj={
+  //   //   namatrip,
+  //   //   gambar,
+  //   //   tanggalmulai:new Date(tanggalmulai).getTime(),
+  //   //   tanggalberakhir:new Date(tanggalberakhir).getTime(),
+  //   //   harga,
+  //   //   deskripsi
+  //   // }
   
-    // axios.put(`${API_URL}/products/${id}`,obj)
-    // .then(()=>{
-    //   axios.get(`${API_URL}/products`)
-    //     .then((res)=>{
-    //       setProduct(res.data)
-    //       seteditform({...editform,harga:''})
-    //       setModaledit(false)
-    //     }).catch((err)=>{
-    //       console.log(err)
-    //     })
-    // })
-  }
+  //   // axios.put(`${API_URL}/products/${id}`,obj)
+  //   // .then(()=>{
+  //   //   axios.get(`${API_URL}/products`)
+  //   //     .then((res)=>{
+  //   //       setProduct(res.data)
+  //   //       seteditform({...editform,harga:''})
+  //   //       setModaledit(false)
+  //   //     }).catch((err)=>{
+  //   //       console.log(err)
+  //   //     })
+  //   // })
+  // }
+
   const body = (
     <div  className={classes.paper}>
       <div>
@@ -270,10 +291,75 @@ function StickyHeadTable(props) {
         </div>
       
       <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
-      <Button color="secondary" onClick={()=>toggle()}>Cancel</Button>
+      <Button color="secondary" onClick={()=>handleClose()}>Cancel</Button>
     </div>
   );
+  // const bodyselect=()=>{
+  //   console.log(addform.kimia)
+  //   return(
+      
+  //     <div style={{textAlign:'center'}} className={classes.paper}>
   
+  //       Pick Chemical 
+  //       <select value={addform.kimia} onChange={(e)=>onhargachange(e)}>
+  //       {inventory.map((val,index)=>{
+  //       return (
+  //         <option value={val.kimia_id}>{val.nama}</option>
+  //       )
+  //       })}
+  //         </select>
+  //         <div>
+  //         <input type='text' ref={addform.adder} placeholder='tambah brp?' className='form-control mb-2'/>
+  //         </div>
+  //           <div>
+  //             <button onClick={()=>OnAdddataClick()}>add stock</button>
+  //           </div>
+  //         </div>
+  //     ) 
+      
+  //     }
+
+  const bodykim = (
+    <div  className={classes.paper}>
+      <div>
+      <select ref={addform.product_id}>
+        {product.map((val,index)=>{
+        return (
+          <option value={val.id}>{val.nama}</option>
+        )
+        })}
+          </select>
+                 <div>
+                  <select ref={addform.kimia_id}>
+                    {prodmodal.map((val,index)=>{
+                    return (
+                      <option value={val.kimia_id}>{val.kimia_id}</option>
+                    )
+                    })}
+                  </select>
+                 </div>
+            <input type='text' ref={addformkim.dosis} placeholder='dosis'/>
+        </div>
+      <div>
+        {/* {
+          prodmodal.map((val,index)=>{
+            if(index===idproductselect)
+            return(
+              <div>
+                nama : {val.nama}
+                dosis : {val.dosis}
+                Kimia : {val.kimia_id}
+              </div>
+            )
+          }) */}
+        
+       
+      </div>
+      <Button color="primary" onClick={()=>OnAdddataClickkim()}>Add data</Button>
+      <Button color="secondary" onClick={()=>handleClosekim()}>Cancel</Button>
+    </div>
+  );
+
   const renderTable=()=>{
     return product.map((val,index)=>{
       return(
@@ -289,41 +375,30 @@ function StickyHeadTable(props) {
             <TableCell>{priceFormatter(val.price)}</TableCell>
            
             <TableCell>{readMore(val.deskripsi)}</TableCell>
+            <TableCell> </TableCell>
             <TableCell>
               <span style={{fontSize:30}} className='text-danger mr-3'><MdDeleteForever/></span>
-              <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>  
-              <span style={{fontSize:30}} onClick={()=>togglefoto(val.id)}  className='text-primary ml-3'><BiPlusCircle/></span>  
+              <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>    
             </TableCell>
         </TableRow>
       )
     })
   }
 
-  const toggle = () => {
-    setModal(!modal)
-    setbanner(null)
-  }
-  const togglefoto = (id) => {
-    setmodalfoto(!modalfoto) //untuk buka modal
-    setfotos([null]) //hapus foto yang ada diaaray
-    if(id){
-      setidproductselect(id) //untuk select id product guanya utntuk dikirimkan ke backend
-    }
-    // setbanner(null)
-  }
+
     
-  const toggleedit = () => setModaledit(!modaledit);
 
-  const tambahfoto=()=>{
+
+  // const tambahfoto=()=>{
  
-    setfotos([...fotos,null])
-  }
+  //   setfotos([...fotos,null])
+  // }
 
-  console.log(fotos)
+  
     return (
         <>
           <Button type="button" onClick={handleOpen}>
-        Add data
+              Add data
           </Button>
           <Modal
               open={open}
@@ -332,6 +407,15 @@ function StickyHeadTable(props) {
               aria-describedby="simple-modal-description"
           >
               {body}
+        </Modal>
+         
+          <Modal
+              open={kimia}
+              onClose={handleClosekim}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+          >
+              {bodykim}
         </Modal>
           {/* {
             product.length?
@@ -394,6 +478,7 @@ function StickyHeadTable(props) {
                           <TableCell style={{width:'200px'}}>Gambar</TableCell>
                           <TableCell>Harga</TableCell>
                           <TableCell style={{width:'300px'}}>Description</TableCell>
+                          <TableCell>Dosage</TableCell>
                           <TableCell >action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -403,6 +488,11 @@ function StickyHeadTable(props) {
                     </Table>
                 </TableContainer>
               </Paper>
+              <div>
+              <Button type="button" onClick={()=>handleOpenkim()}>
+                  Add Kimia
+              </Button>
+              </div>
           </div>
         </>
     );

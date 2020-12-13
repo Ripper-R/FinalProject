@@ -61,8 +61,8 @@ function App(props) {
   // };
   return (
     <>
-    <Navbar/>
-    <Switch>
+   <Navbar/>
+   <Switch>
     <Route exact path='/' component={Home}/>
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/register' component={Register}/>
