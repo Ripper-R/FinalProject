@@ -41,7 +41,6 @@ paper: {
     borderRadius:10
 }
 });
-
 class Cart extends Component {
     
 

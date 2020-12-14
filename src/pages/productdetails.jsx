@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import Axios from 'axios'
 import {Button} from './../components/homecomponent/Button'
-import {API_URLbe} from './../helper/idformat'
+import {API_URLbe,priceFormatter} from './../helper/idformat'
 import {connect} from 'react-redux'
 import {AddcartAction} from './../redux/actions'
 import Swal from 'sweetalert2'
@@ -12,7 +12,6 @@ const [Prod,setProd]=useState({})
 
 useEffect(()=>{
     Axios.get(`http://localhost:8080/product/getproduct/${props.match.params.id}`)
-    
     .then((res)=>{
         console.log(res.data)
         setProd(res.data.dataprod)
