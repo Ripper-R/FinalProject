@@ -143,6 +143,10 @@ onbayarpakeCC=()=>{
             'Authorization':`Bearer ${this.props.token}`
         }
     }).then((res)=>{
+        Axios.post(`${API_URLbe}/trans/inventDec`,{
+            datacart:this.state.cart                                                                                    
+        })
+        console.log(res.data,'a')
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false})
@@ -159,40 +163,43 @@ onbayarpakeCC=()=>{
     })
 }
 onbayarpakebukti=()=>{
-    console.log('onbayarpakebukti');
-    Swal.fire({
-        icon: 'error',
-        title: 'Payment method not available at now',
-        text: 'Payment method still under maintenance',
+    // console.log('onbayarpakebukti');
+    // Swal.fire({
+    //     icon: 'error',
+    //     title: 'Payment method not available at now',
+    //     text: 'Payment method still under maintenance',
+    //     })
+    var formData=new FormData()
+    var options={
+        headers:{
+            'Content-type':'multipart/form-data',
+            'Authorization':`Bearer ${this.props.token}`
+        },
+        params:{
+            userid:this.props.id
+        }
+    }
+    formData.append('bukti',this.state.buktitrans)
+    formData.append('data',JSON.stringify({idtrans:this.state.idtrans}))
+    Axios.post(`${API_URLbe}/trans/bayarbukti`,formData,options)
+    .then((res)=>{
+        Axios.post(`${API_URLbe}/trans/inventDec`,{
+            datacart:this.state.cart                                                                                    
         })
-    // var formData=new FormData()
-    // var options={
-    //     headers:{
-    //         'Content-type':'multipart/form-data',
-    //         'Authorization':`Bearer ${this.props.token}`
-    //     },
-    //     params:{
-    //         userid:this.props.id
-    //     }
-    // }
-    // formData.append('bukti',this.state.buktitrans)
-    // formData.append('data',JSON.stringify({idtrans:this.state.idtrans}))
-    // Axios.post(`${API_URLbe}/trans/bayarbukti`,formData,options)
-    // .then((res)=>{
-    //     if(res.data === 'berhasil'){
-    //         this.props.AddcartAction([])
-    //         this.setState({cart:[],isOpen:false,buktitrans:null})
-    //         Swal.fire({
-    //             position: 'top-center',
-    //             icon: 'success',
-    //             title: 'Thank you for trust your Drugstore!',
-    //             showConfirmButton: false,
-    //             timer: 1500
-    //             })
-    //     }
-    // }).catch((err)=>{
-    //     console.log(err)
-    // })
+        if(res.data === 'berhasil'){
+            this.props.AddcartAction([])
+            this.setState({cart:[],isOpen:false,buktitrans:null})
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Thank you for trust your Drugstore!',
+                showConfirmButton: false,
+                timer: 1500
+                })
+        }
+    }).catch((err)=>{
+        console.log(err)
+    })
 }
 onCheckOutClick=()=>{
     this.setState({isOpen:true})
