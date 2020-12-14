@@ -210,7 +210,7 @@ body=()=>{
                 Total price  {priceFormatter(this.renderTotalprice())}
             </div>
             <div>
-            <Button className="nav-links-mobile" onClick={()=>this.onBayarClick}>
+            <Button className="nav-links-mobile" onClick={this.onBayarClick}>
                             Bayar
             </Button>
             </div>

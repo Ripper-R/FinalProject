@@ -21,16 +21,29 @@ class AdminPayment extends Component {
         Axios.get(`${API_URLbe}/trans/getwaitingApprove`)
         .then((res)=>{
             this.setState({confirm:res.data})
+            console.log(this.state.confirm[0])
         }).catch((err)=>{
             console.log(err)
         })
     }
-    renderTotal=(transactionsdetails=[])=>{
-        return transactionsdetails.reduce((val,number)=>{
-            return val + (number.price*number.qty)
-        },0)
+    componentDidUpdate(){
+        Axios.get(`${API_URLbe}/trans/getwaitingApprove`)
+        .then((res)=>{
+            this.setState({confirm:res.data})
+            console.log(this.state.confirm[0])
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
+    // renderTotal=(transactionsdetails=[])=>{
+    //     console.log(transactionsdetails)
+    //     return transactionsdetails.reduce((val,number)=>{
+    //         console.log(number.price,number.qty)
+    //         return val + (number.price*number.qty)
+    //     },0)
+    // }
     onAcceptClick=(id)=>{
+        console.log(id)
         MySwal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -41,10 +54,10 @@ class AdminPayment extends Component {
             confirmButtonText: 'yes ,Accept'
           }).then((result) => {
             if (result.isConfirmed) {
-                Axios.patch(`${API_URL}/transactions/${id}`,{
+                Axios.put(`${API_URLbe}/trans/approve/${id}`,{
                     status:'Completed'
                 }).then(()=>{
-                    Axios.get(`${API_URL}/transactions`,{
+                    Axios.get(`${API_URLbe}/transactions`,{
                         params:{
                             status: "WaitingAdmin",
                             _embed:'transactionsdetails'
@@ -68,17 +81,18 @@ class AdminPayment extends Component {
     }
     renderTable=()=>{
         return this.state.confirm.map((val,index)=>{
+            
             return(
-            <TableRow key={val.id}>
+            <TableRow key={val.transactions_id}>
                 <TableCell>{index+1}</TableCell>
                 <TableCell>
-                  <div style={{maxWidth:'200px'}}>
-                    <img width='100%' height='100%' src={val.buktipembayaran} alt={val.id}/>
+                  <div style={{maxWidth:'500px'}}>
+                    <img width='100%' height='100%' src={`${API_URLbe}/${val.buktipembayaran}`} alt={val.id}/>
                   </div>
                 </TableCell>
-                <TableCell>{priceFormatter(this.renderTotal(val.transactionsdetails))}</TableCell>
+                <TableCell>{priceFormatter(val.totalprice)}</TableCell>
                 <TableCell>
-                    <Button onClick={()=>this.onAcceptClick(val.id)}>
+                    <Button onClick={()=>this.onAcceptClick(val.transactions_id)}>
                         Accept
                     </Button>
                 </TableCell>
@@ -93,8 +107,8 @@ class AdminPayment extends Component {
                
                 <div className='martgintop'>
                     {/* <h1>payment</h1> */}
-                    <div className='d-flex justify-content-center pt-3'>
-                        <Paper style={{width:'50%'}}>
+                    <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                        <Paper style={{width:'100%'}}>
                             <TableContainer >
                                 <Table  stickyHeader aria-label="sticky table">
                                 <TableHead>
