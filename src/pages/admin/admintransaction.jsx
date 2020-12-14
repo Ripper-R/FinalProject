@@ -96,7 +96,6 @@ class AdminPayment extends Component {
     render() { 
         return (
             <div>
-               
                 <div className='martgintop'>
                     {/* <h1>payment</h1> */}
                     <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>

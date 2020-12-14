@@ -12,34 +12,35 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
+import Input from '@material-ui/core/Input'
 import { Button } from "../../components/homecomponent/Button";
-// import {Modal,ModalHeader,ModalBody,ModalFooter,CustomInput} from 'reactstrap'
 import {AddcartAction} from '../../redux/actions'
 import { Zoom } from 'react-reveal/Zoom'
-import Modal from '@material-ui/core/Modal';
-import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2'
+import Modal from '@material-ui/core/Modal';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField'
 
 const useStyles = theme =>({
-    root: {
-      width: '100%',
-    },
-    container: {
-      maxHeight: 440,
-    },
-    paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: 'white',
-      border: '2px solid #000',
-      padding: 10,
-      height :300,
-      marginTop:100,
-      marginLeft:'30%'
-    }
-  });
-
-
+root: {
+    width: '100%',
+},
+container: {
+    maxHeight: 350,
+},
+paper: {
+    position: 'realtive',
+    width: 350,
+    backgroundColor: 'whitesmoke',
+    padding:10,
+    height :200,
+    marginTop:500,
+    marginLeft:'38%',
+    borderRadius:10
+}
+});
 class Cart extends Component {
     
 
@@ -69,6 +70,7 @@ componentDidMount(){
         console.log(err)
     })
 }
+
 
 oninputfilechange=(e)=>{
     if(e.target.files[0]){
@@ -154,14 +156,19 @@ onbayarpakeCC=()=>{
                 title: 'Thank you for trust your Drugstore!',
                 showConfirmButton: false,
                 timer: 1500
-            })
+                })
         }
     }).catch(err=>{
         console.log(err)
     })
-   
 }
 onbayarpakebukti=()=>{
+    // console.log('onbayarpakebukti');
+    // Swal.fire({
+    //     icon: 'error',
+    //     title: 'Payment method not available at now',
+    //     text: 'Payment method still under maintenance',
+    //     })
     var formData=new FormData()
     var options={
         headers:{
@@ -182,6 +189,13 @@ onbayarpakebukti=()=>{
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false,buktitrans:null})
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Thank you for trust your Drugstore!',
+                showConfirmButton: false,
+                timer: 1500
+                })
         }
     }).catch((err)=>{
         console.log(err)
@@ -194,37 +208,37 @@ onCheckClick=()=>{
     this.setState({isOpen:false})
 }
 body=()=>{
-    const{classes}=this.props
-    return(
+const{classes}=this.props
+return(
 
-    <div className={classes.paper}>
-        Pembayaran
-        <div>
-            <select onChange={(e)=>this.setState({pilihan:e.target.value})} className='form-control' defaultValue={0} >
-                      <option value="0" hidden>Select payment</option>
-                      <option value="1">input bukti transfer</option>
-                      <option value="2">Credit card</option>
-            </select>
-                     {
-                          this.state.pilihan==2?
-                          <input className='form-control' ref={this.state.cc} placeholder='masukkan cc'/>
-                          :
-                         this.state.pilihan==1?
-                         <input className='form-control' onChange={this.oninputfilechange} type='file'   label={this.state.buktitrans?this.state.buktitrans.name:'Select bukti'}/>
-                         :
-                         null
-                    }
-             <div>
-                Total price  {priceFormatter(this.renderTotalprice())}
+<div className={classes.paper} style={{alignItems:'center', justifyContent:'center', textAlign:'center'}}>
+    <h4 style={{backgroundColor:'rgb(92, 166, 226)', color:'whitesmoke', fontFamily:'inherit'}}>Choose your payment method</h4>
+    <div style={{marginTop:10}}>
+        <Select onChange={(e)=>this.setState({pilihan:e.target.value})} className='form-control' defaultValue={0} >
+                    <MenuItem value="0" hidden>Select payment</MenuItem>
+                    <MenuItem value="1">Upload your invoice</MenuItem>
+                    <MenuItem value="2">Credit card</MenuItem>
+        </Select>
+                    {
+                        this.state.pilihan==2?
+                        <input className='form-control' ref={this.state.cc} placeholder='CC Number'/>
+                        :
+                        this.state.pilihan==1?
+                        <Input className='form-control' onChange={this.oninputfilechange} type='file'   label={this.state.buktitrans?this.state.buktitrans.name:'Select bukti'}/>
+                        :
+                        null
+                }
+            <div style={{marginBottom:10, marginTop:10}}>
+            Total price  {priceFormatter(this.renderTotalprice())}
             </div>
             <div>
-            <Button className="nav-links-mobile" onClick={this.onBayarClick}>
-                            Bayar
+            <Button buttonStyle='btn--background' onClick={this.onBayarClick}>
+            CheckOut
             </Button>
             </div>
-        </div>
     </div>
-    )
+</div>
+)
 }
     
 
@@ -235,10 +249,14 @@ render() {
         return (
             <div>
                 <Modal
-                 open={this.state.isOpen}
-                 onClose={this.onCheckClick}
-                 aria-labelledby="simple-modal-title"
-                 aria-describedby="simple-modal-description"
+                open={this.state.isOpen}
+                onClose={this.onCheckClick}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                disableAutoFocus='true'
+                disablePortal='true'
+                isOpen={this.state.isOpen} 
+                toggle={()=>this.setState({isOpen:false})}
                 >
                     
                     {this.body()}
@@ -270,6 +288,9 @@ render() {
                         </TableContainer>
                         <Button buttonStyle='btn--background' buttonSize='btn--medium' onClick={this.onCheckOutClick}>
                             CheckOut
+                        </Button>
+                        <Button buttonStyle='btn--background2' style={{marginLeft:20}} onClick={(e)=> {Axios.delete(`${API_URLbe}/trans/clearCart`)}}>
+                            Clear Cart
                         </Button>
                     </Paper>
                 </div>
