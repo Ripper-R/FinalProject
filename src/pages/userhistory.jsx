@@ -106,7 +106,7 @@ render() {
     return (
         <div>
             <div style={{marginTop:50, alignItems:'center', justifyContent:'center'}}>
-                {/* <h1>payment</h1> */}
+                <h1 style={{marginBottom:30}}>Your Transaction History!</h1>
                 <div className='d-flex justify-content-center pt-3'>
                     <Paper style={{width:'50%'}}>
                         <TableContainer >

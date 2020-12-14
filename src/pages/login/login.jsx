@@ -50,6 +50,22 @@ OnLoginClick = (e) => {
     var password1=password.current.value
     this.props.LoginThunk(username1,password1)
     e.preventDefault()
+    console.log(username1,password1)
+        // Axios.get(`${API_URL}/users?username=${username1}&password=${password1}`)
+        // .then((res)=>{
+        //     console.log('masuk sini')
+        //     console.log(res.data)
+        //     if(res.data.length){
+        //         localStorage.setItem('id',res.data[0].id)
+        //         this.props.LoginFunc(res.data[0])
+        //     }else{
+        //         console.log('user salah password')
+        //         this.setState({alert:'Password / Username salah bro'})
+        //     }
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
+    
 };
 
 render() {
