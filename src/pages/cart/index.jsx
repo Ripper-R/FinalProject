@@ -144,7 +144,7 @@ onbayarpakeCC=()=>{
         Axios.post(`${API_URLbe}/trans/inventDec`,{
             datacart:this.state.cart                                                                                    
         })
-        console.log(res.data)
+        console.log(res.data,'a')
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false})
