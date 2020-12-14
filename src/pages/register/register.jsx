@@ -85,7 +85,7 @@ OnRegisterClick=(e)=>{
           }).catch((err)=>{
             console.log(err)
               toast.error(err.response.data.message, {
-                  position: "top-left",
+                  position: "bottom-left",
                   autoClose: 2000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -95,7 +95,7 @@ OnRegisterClick=(e)=>{
           })
         }else{
           toast.error('confirmasi dan password harus sama', {
-              position: "top-left",
+              position: "bottom-left",
               autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
@@ -105,7 +105,7 @@ OnRegisterClick=(e)=>{
       }
   }else{
       toast.error(this.checkpass(password1).message, {
-          position: "top-left",
+          position: "bottom-left",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,

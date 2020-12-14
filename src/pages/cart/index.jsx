@@ -18,7 +18,7 @@ import {AddcartAction} from '../../redux/actions'
 import { Zoom } from 'react-reveal/Zoom'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles,withStyles } from '@material-ui/core/styles';
-
+import Swal from 'sweetalert2'
 
 const useStyles = theme =>({
     root: {
@@ -38,6 +38,7 @@ const useStyles = theme =>({
       marginLeft:'30%'
     }
   });
+
 
 class Cart extends Component {
     
@@ -114,13 +115,20 @@ onBayarClick=()=>{
         this.onbayarpakebukti()
     }else if(pilihan==='2'){
         if(credit(parseInt(this.state.cc.current.value))){
-            // alert('cc bener')
             this.onbayarpakeCC()
-        }else{
-            alert('bukan cc')
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Not a credit card number!',
+                })
         }
-    }else{
-        alert('pilih dulu tipe pembayarannya bro')
+    } else {
+        Swal.fire(
+            'Metode Pembayaran?',
+            'Dont forget to choose your payment method!',
+            'question'
+            )
     }
 }
 onbayarpakeCC=()=>{
@@ -136,6 +144,13 @@ onbayarpakeCC=()=>{
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false})
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Thank you for trust your Drugstore!',
+                showConfirmButton: false,
+                timer: 1500
+                })
         }
     }).catch(err=>{
         console.log(err)

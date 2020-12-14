@@ -38,26 +38,26 @@ const Product=()=>{
      
 
         return(
-
+            
           <Bounce top>
-            <Card style={{flexBasis:'25%',marginTop:10,marginRight:40,width:200}} >
-            <CardContent>
+            <Card style={{flexBasis:'25%',marginTop:10,marginRight:40,width:'100%', borderRadius:'10px', justifyContent:'center', alignItems:'center', paddingLeft:'8px', paddingRight:'8px'}} >
+            <CardContent style={{alignItems:'center', display:'flex', flexFlow:'column', margin:'0 auto', width:'90%', position:'relative'}}>
               <Typography  color="textSecondary" gutterBottom>
               <img src={`http://localhost:8080/${state.banner}`} style={{width:150,height:100}}/>
               </Typography>
-              <Typography variant="h5" component="h2">
+              <Typography variant="h5" component="h2" style={{fontFamily:'inherit'}}>
                 {state.nama}
               </Typography>
-              <Typography  color="textSecondary">
-                {state.price}
+              <Typography  color="textSecondary" style={{fontFamily:'inherit'}}>
+                Rp {state.price},00
               </Typography>
-              <Typography variant="body2" component="p">
+              <Typography variant="body2" component="p" style={{fontFamily:'inherit'}}>
                 {state.deskripsi}
               
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small"><Link to={'/productdetails/'+state.id}>To details</Link></Button>
+              <Button size="small"><Link style={{alignItems:'center', color:'black', fontSize:'20px', textDecoration:'none', width:'100%', position:'center'}} to={'/productdetails/'+state.id}><i style={{marginRight:5}} class="fas fa-dolly"></i> Go To Detail</Link></Button>
             </CardActions>
           </Card>
           </Bounce>
@@ -74,9 +74,13 @@ const Product=()=>{
                   <div>
                   <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-6.jpg' alt="gambar"/>
                   </div>
+                  <div>
+                  <img style={{width:600,height:400,justifyContent:"center"}} src='./images/img-5.jpg' alt="gambar"/>
+                  </div>
                     </Slider>
             </div>
-        <div style={{width:'100%',height:950,marginTop:20,marginBottom:20,borderStyle:'solid',borderWidth:'3px'}} className='conten'>
+        <div style={{width:'100%',height:950,marginTop:20,marginBottom:20,borderWidth:'3px'}} className='conten'>
+        <h1 style={{textAlign:"center", marginBottom:20, margintop:100}}>Check Out Our Latest Product!</h1>
             <div style={{flexWrap:'wrap',display:'flex',padding:40,justifyContent:'flex-start'}}>
               {
                   Data.map((val, index) => {
