@@ -90,7 +90,6 @@ class AdminPayment extends Component {
     render() { 
         return (
             <div>
-                <Header/>
                 <div className='martgintop'>
                     {/* <h1>payment</h1> */}
                     <div className='d-flex justify-content-center pt-3'>

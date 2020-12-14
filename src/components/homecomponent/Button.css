@@ -22,6 +22,12 @@
   border: 1px solid black;
 }
 
+.btn--background2 {
+  background: rgb(224, 96, 96);
+  color: #ffff;
+  border: 1px solid black;
+}
+
 .btn--outline {
   background-color: transparent;
   color: #fff;
@@ -52,5 +58,12 @@
   transition: all 0.3s ease-out;
   background: #fff;
   color: rgb(92, 166, 226);
+  transition: 250ms;
+}
+
+.btn--background2:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: rgb(240, 32, 32);
   transition: 250ms;
 }

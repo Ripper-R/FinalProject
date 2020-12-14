@@ -94,7 +94,7 @@ OnRegisterClick=(e)=>{
               });
           })
         }else{
-          toast.error('confirmasi dan password harus sama', {
+          toast.error('Check again your password', {
               position: "bottom-left",
               autoClose: 2000,
               hideProgressBar: false,
