@@ -13,6 +13,7 @@ import { API_URL,priceFormatter,API_URLbe } from './../../helper/idformat';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
+
 class AdminPayment extends Component {
     state = {
         confirm:[]
@@ -53,16 +54,11 @@ class AdminPayment extends Component {
             cancelButtonColor: '#d33',
             confirmButtonText: 'yes ,Accept'
           }).then((result) => {
+              console.log(result)
             if (result.isConfirmed) {
                 Axios.put(`${API_URLbe}/trans/approve/${id}`,{
-                    status:'Completed'
-                }).then(()=>{
-                    Axios.get(`${API_URLbe}/transactions`,{
-                        params:{
-                            status: "WaitingAdmin",
-                            _embed:'transactionsdetails'
-                        }
-                    }).then((res)=>{
+                    status:'completed'
+                }).then((res)=>{
                         MySwal.fire(
                             'Accepted',
                             'Payment Accepted',
@@ -72,10 +68,6 @@ class AdminPayment extends Component {
                     }).catch((err)=>{
                         console.log(err)
                     })
-
-                }).catch((err)=>{
-                    console.log(err)
-                })
             }
           })
     }
@@ -83,7 +75,7 @@ class AdminPayment extends Component {
         return this.state.confirm.map((val,index)=>{
             
             return(
-            <TableRow key={val.transactions_id}>
+            <TableRow key={val.id}>
                 <TableCell>{index+1}</TableCell>
                 <TableCell>
                   <div style={{maxWidth:'500px'}}>
@@ -92,7 +84,7 @@ class AdminPayment extends Component {
                 </TableCell>
                 <TableCell>{priceFormatter(val.totalprice)}</TableCell>
                 <TableCell>
-                    <Button onClick={()=>this.onAcceptClick(val.transactions_id)}>
+                    <Button onClick={()=>this.onAcceptClick(val.id)}>
                         Accept
                     </Button>
                 </TableCell>

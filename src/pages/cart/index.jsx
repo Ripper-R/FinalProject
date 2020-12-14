@@ -141,6 +141,10 @@ onbayarpakeCC=()=>{
             'Authorization':`Bearer ${this.props.token}`
         }
     }).then((res)=>{
+        Axios.post(`${API_URLbe}/trans/inventDec`,{
+            datacart:this.state.cart                                                                                    
+        })
+        console.log(res.data)
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false})
@@ -150,11 +154,12 @@ onbayarpakeCC=()=>{
                 title: 'Thank you for trust your Drugstore!',
                 showConfirmButton: false,
                 timer: 1500
-                })
+            })
         }
     }).catch(err=>{
         console.log(err)
     })
+   
 }
 onbayarpakebukti=()=>{
     var formData=new FormData()
@@ -171,6 +176,9 @@ onbayarpakebukti=()=>{
     formData.append('data',JSON.stringify({idtrans:this.state.idtrans}))
     Axios.post(`${API_URLbe}/trans/bayarbukti`,formData,options)
     .then((res)=>{
+        Axios.post(`${API_URLbe}/trans/inventDec`,{
+            datacart:this.state.cart                                                                                    
+        })
         if(res.data === 'berhasil'){
             this.props.AddcartAction([])
             this.setState({cart:[],isOpen:false,buktitrans:null})

@@ -29,8 +29,10 @@ const useStyles = makeStyles((theme)=>({
     width: 400,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: 20,
+    marginLeft:'40%',
+    marginTop:'10%'
+
   }
 }));
 
@@ -65,6 +67,8 @@ function StickyHeadTable(props) {
   // const [fotos,setfotos]=useState([null])
   const [product,setProduct]=useState([])
   const [prodmodal,setProductmodal]=useState([])
+  const [prodmodal1,setProductmodal1]=useState([])
+
 
   const [banner,setbanner]=useState(null)
 
@@ -110,8 +114,18 @@ function StickyHeadTable(props) {
             console.log(err)
           })
         }
+      const fetch3=()=>{
+          axios.get(`${API_URLbe}/product/getprodetail2`)
+          .then((res)=>{
+            console.log(res.data)
+            setProductmodal1(res.data)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }
         fetch()
         fetch2()
+        fetch3()
     
   },[])
   
@@ -289,6 +303,7 @@ function StickyHeadTable(props) {
                  </div>
             <textarea className='form-control mb-2' ref={addform.deskripsi} placeholder='deskripsi' cols="30" rows="7"></textarea>
         </div>
+        
       
       <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
       <Button color="secondary" onClick={()=>handleClose()}>Cancel</Button>
@@ -341,19 +356,21 @@ function StickyHeadTable(props) {
             <input type='text' ref={addformkim.dosis} placeholder='dosis'/>
         </div>
       <div>
-        {/* {
+        {
           prodmodal.map((val,index)=>{
-            if(index===idproductselect)
-            return(
-              <div>
-                nama : {val.nama}
-                dosis : {val.dosis}
-                Kimia : {val.kimia_id}
-              </div>
-            )
-          }) */}
-        
-       
+            if(index===idproductselect){
+              return(
+                <div>
+                  nama : {val.nama}
+                  <br></br>
+                  dosis : {val.dosis}
+                  <br></br>
+                  Kimia : {val.kimia_id}
+                </div>
+              )
+            }
+            })
+          }
       </div>
       <Button color="primary" onClick={()=>OnAdddataClickkim()}>Add data</Button>
       <Button color="secondary" onClick={()=>handleClosekim()}>Cancel</Button>
@@ -375,7 +392,9 @@ function StickyHeadTable(props) {
             <TableCell>{priceFormatter(val.price)}</TableCell>
            
             <TableCell>{readMore(val.deskripsi)}</TableCell>
-            <TableCell> </TableCell>
+              <TableCell> 
+          
+              </TableCell>
             <TableCell>
               <span style={{fontSize:30}} className='text-danger mr-3'><MdDeleteForever/></span>
               <span style={{fontSize:30}}  className='text-primary ml-3'><BiEdit/></span>    
