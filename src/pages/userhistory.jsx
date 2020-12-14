@@ -10,7 +10,7 @@ import {connect} from 'react-redux'
 import Axios from 'axios'
 import { Button } from '../components/homecomponent/Button'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { API_URL,priceFormatter } from '../helper/idformat';
+import { API_URLbe,priceFormatter } from '../helper/idformat';
 // import { TablePagination } from '@material-ui/core';
 class History extends Component {
 state = {
@@ -20,10 +20,10 @@ state = {
 }
 
 componentDidMount(){
-    Axios.get(`${API_URL}/transactions`,{
+    Axios.get(`${API_URLbe}/transactions`,{
         params:{
-            status:'Completed',
-            userId:this.props.Auth.id
+            status:'completed',
+            user_id:this.props.Auth.id
         }
     }).then((res)=>{
         this.setState({history:res.data})
@@ -40,7 +40,7 @@ dateformat=(n)=>{
 }
 
 todetails=(id)=>{
-    Axios.get(`${API_URL}/transactionsdetails?transactionId=${id}&_expand=product`)
+    Axios.get(`${API_URLbe}/transactionsdetails?transactions_id=${id}&_expand=product`)
     .then((res)=>{
         this.setState({dataselect:res.data,isOpen:true})
     }).catch((err)=>{
@@ -56,7 +56,7 @@ renderTable=()=>{
             <TableCell>
                 {val.metode}
             </TableCell>
-            <TableCell>{this.dateformat(val.tanggalPembayaran)}</TableCell>
+            <TableCell>{this.dateformat(val.tanggal)}</TableCell>
             <TableCell>
                 <Button onClick={()=>this.todetails(val.id)}>
                     Details
@@ -72,11 +72,11 @@ renderDetails=()=>{
         <TableRow key={val.id}>
             <TableCell>{index+1}</TableCell>
             <TableCell>
-                {val.product.namatrip}
+                {val.product.nama}
             </TableCell>
             <TableCell>
                 <div style={{width:200,height:100}}>
-                    <img src={val.product.gambar} width='100%' height='100%' alt={index}/>
+                    <img src={val.product.banner} width='100%' height='100%' alt={index}/>
                 </div>
             </TableCell>
             <TableCell>
