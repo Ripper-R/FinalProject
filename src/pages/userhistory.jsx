@@ -20,12 +20,8 @@ state = {
 }
 
 componentDidMount(){
-    Axios.get(`${API_URLbe}/transactions`,{
-        params:{
-            status:'completed',
-            user_id:this.props.Auth.id
-        }
-    }).then((res)=>{
+    Axios.get(`${API_URLbe}/trans/getcompleted`)
+    .then((res)=>{
         this.setState({history:res.data})
     })
 }
@@ -72,7 +68,7 @@ renderDetails=()=>{
         <TableRow key={val.id}>
             <TableCell>{index+1}</TableCell>
             <TableCell>
-                {val.product.nama}
+                {val.nama}
             </TableCell>
             <TableCell>
                 <div style={{width:200,height:100}}>
