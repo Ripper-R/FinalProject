@@ -20,11 +20,11 @@ state = {
 }
 
 componentDidMount(){
-    Axios.get(`${API_URLbe}/transactions`,{
-        params:{
-            status:'completed',
-            user_id:this.props.Auth.id
-        }
+    Axios.get(`${API_URLbe}/trans/getcompleted/${this.props.match.id}`,{
+        // params:{
+        //     status:'completed',
+        //     user_id:this.props.Auth.id
+        // }
     }).then((res)=>{
         this.setState({history:res.data})
     })
@@ -39,14 +39,14 @@ dateformat=(n)=>{
     return today
 }
 
-todetails=(id)=>{
-    Axios.get(`${API_URLbe}/transactionsdetails?transactions_id=${id}&_expand=product`)
-    .then((res)=>{
-        this.setState({dataselect:res.data,isOpen:true})
-    }).catch((err)=>{
-        console.log(err)
-    })
-}
+// todetails=(id)=>{
+//     Axios.get(`${API_URLbe}/trans/getdetail/${id}`)
+//     .then((res)=>{
+//         this.setState({dataselect:res.data,isOpen:true})
+//     }).catch((err)=>{
+//         console.log(err)
+//     })
+// }
 
 renderTable=()=>{
     return this.state.history.map((val,index)=>{
@@ -58,9 +58,7 @@ renderTable=()=>{
             </TableCell>
             <TableCell>{this.dateformat(val.tanggal)}</TableCell>
             <TableCell>
-                <Button onClick={()=>this.todetails(val.id)}>
-                    Details
-                </Button>
+            { priceFormatter(val.harga*val.qty)}
             </TableCell>
         </TableRow>
         )
@@ -72,21 +70,18 @@ renderDetails=()=>{
         <TableRow key={val.id}>
             <TableCell>{index+1}</TableCell>
             <TableCell>
-                {val.product.nama}
-            </TableCell>
-            <TableCell>
                 <div style={{width:200,height:100}}>
-                    <img src={val.product.banner} width='100%' height='100%' alt={index}/>
+                    {/* <img src={val.product.banner} width='100%' height='100%' alt={index}/> */}
                 </div>
             </TableCell>
             <TableCell>
                 {val.qty}
             </TableCell>
             <TableCell>
-                { priceFormatter(val.price)}
+                { priceFormatter(val.harga)}
             </TableCell>
             <TableCell>
-                { priceFormatter(val.price*val.qty)}
+                { priceFormatter(val.harga*val.qty)}
             </TableCell>
         </TableRow>
         )
@@ -95,7 +90,7 @@ renderDetails=()=>{
 totalharga=()=>{
     var total=0
     for(let i=0;i<this.state.dataselect.length;i++){
-        total+=(this.state.dataselect[i].price*this.state.dataselect[i].qty)
+        total+=(this.state.dataselect[i].harga*this.state.dataselect[i].qty)
     }
     return total
     // return this.state.dataselect.reduce((val,num)=>{
@@ -106,7 +101,7 @@ render() {
     return (
         <div>
             <div style={{marginTop:50, alignItems:'center', justifyContent:'center'}}>
-                <h1 style={{marginBottom:30}}>Your Transaction History!</h1>
+                <h1 style={{marginBottom:50, alignItems:'center', textAlign:'center'}}>Your Transaction History!</h1>
                 <div className='d-flex justify-content-center pt-3'>
                     <Paper style={{width:'50%'}}>
                         <TableContainer >
@@ -116,7 +111,7 @@ render() {
                                     <TableCell style={{width:50}}>No.</TableCell>
                                     <TableCell>Metode Pembayaran</TableCell>
                                     <TableCell>Tanggal pembayaran</TableCell>
-                                    <TableCell>Details</TableCell>
+                                    <TableCell>Total Pembayaran</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -127,7 +122,7 @@ render() {
                     </Paper>
                 </div>
             </div>
-            <Modal scrollable style={{marginTop:80}} size='lg' isOpen={this.state.isOpen} toggle={()=>this.setState({isOpen:false})}>
+            {/* <Modal scrollable style={{marginTop:80}} size='lg' isOpen={this.state.isOpen} toggle={()=>this.setState({isOpen:false})}>
                 <ModalHeader toggle={()=>this.setState({isOpen:false})}>
                     Details
                 </ModalHeader>
@@ -171,7 +166,7 @@ render() {
                         OK
                     </Button>
                 </ModalFooter>
-            </Modal>
+            </Modal> */}
         </div>
         );
 }

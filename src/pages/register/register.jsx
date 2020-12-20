@@ -32,6 +32,7 @@ checkpass=(pass='')=>{
   if(pssw.length>=6){
       var angka=false
       var huruf=false
+      var capital=false
       for(let i=0;i<pssw.length;i++){
           if(isNaN(pssw[i])){
               huruf=true
@@ -71,6 +72,7 @@ OnRegisterClick=(e)=>{
   var password1=password.current.value
   var conpass=confirmpass.current.value
   var email1=email.current.value
+  username1 = username1.replace(/\s+/g, '-').toLowerCase()
   e.preventDefault()
   if(this.checkpass(password1).status){
       if(password1 === conpass){

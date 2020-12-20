@@ -117,7 +117,7 @@ const Navbar = ({username,isLogin,role,cart,LogOutfunc}) => {
                 isLogin && role!=='admin' ?
                 <li className="nav-item">
                 <Link
-                  to="/userhistory"
+                  to={"/userhistory/" + localStorage.getItem('id')}
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >

@@ -52,7 +52,8 @@ state = {
     cc:createRef(),
     idtrans:0,
     buktitrans:null,
-    isClose:false
+    isClose:false,
+    cartclear:false
 
 }
 componentDidMount(){
@@ -62,6 +63,7 @@ componentDidMount(){
         params:{
             userid:this.props.id,
         }
+    
     })
     .then((res)=>{
         console.log(res.data)
@@ -69,6 +71,25 @@ componentDidMount(){
     }).catch((err)=>{
         console.log(err)
     })
+}
+
+componentDidUpdate(){
+    console.log(this.props.id)
+    if(
+    this.state.cartclear===true 
+    ){
+        Axios.get(`${API_URLbe}/trans/getcart`,{
+            params:{
+                userid:this.props.id,
+            }
+        })
+        .then((res)=>{
+            console.log(res.data)
+            this.setState({cart:res.data,idtrans:res.data[0].idtrans, cartclear:false})
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
 }
 
 
@@ -207,6 +228,16 @@ onCheckOutClick=()=>{
 onCheckClick=()=>{
     this.setState({isOpen:false})
 }
+clearCart=()=>{
+    Axios.delete(`${API_URLbe}/trans/clearCart`)
+    .then((res)=>{
+        this.setState({clearCart:true})
+        console.log(res.data)
+    }).catch((err)=>{
+        console.log(err)
+    })
+}
+
 body=()=>{
 const{classes}=this.props
 return(
@@ -289,7 +320,7 @@ render() {
                         <Button buttonStyle='btn--background' buttonSize='btn--medium' onClick={this.onCheckOutClick}>
                             CheckOut
                         </Button>
-                        <Button buttonStyle='btn--background2' style={{marginLeft:20}} onClick={(e)=> {Axios.delete(`${API_URLbe}/trans/clearCart`)}}>
+                        <Button buttonStyle='btn--background2' style={{marginLeft:20}} onClick={this.clearCart}>
                             Clear Cart
                         </Button>
                     </Paper>
