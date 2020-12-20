@@ -157,6 +157,18 @@ function StickyHeadTable(props) {
         }
     }
   }
+  const onhargachangekim=(e)=>{
+    if(e.target.value===''){
+      setaddformkim({...addformkim,dosis:0})
+    }
+    if(Number(e.target.value)){
+        if(addform.price === 0){
+            setaddformkim({...addformkim,dosis:e.target.value[1]})
+        }else{
+            setaddformkim({...addformkim,dosis:e.target.value})    
+        }
+    }
+  }
   // const onhargachangeedit=(e)=>{
   //   console.log(e.target.value)
   //   if(e.target.value===''){
@@ -219,7 +231,7 @@ function StickyHeadTable(props) {
     console.log(product_id)
     var kimiaid=addformkim.kimia_id.current.value
     console.log(kimiaid)
-    var dosis=addformkim.dosis.current.value
+    var dosis=addformkim.dosis
     console.log(dosis)
     var data={
       product_id:product_id,
@@ -238,6 +250,22 @@ function StickyHeadTable(props) {
     
   }
 
+  const onclickplus=(index)=>{
+    return(
+      <>
+      <div key={index}>
+      <select ref={addformkim.kimia_id} >
+        {prodmodal.map((val,index)=>{
+        return (
+          <option value={val.kimia_id}>{val.kimia_id}</option>
+        )
+        })}
+      </select>
+     </div>
+    <input type='text' value={addformkim.dosis} onChange={(e)=>onhargachangekim(e)} placeholder='dosis'/>
+    </>
+    )
+  }
 
 
   // useEffect(()=>{
@@ -303,6 +331,13 @@ function StickyHeadTable(props) {
                  </div>
             <textarea className='form-control mb-2' ref={addform.deskripsi} placeholder='deskripsi' cols="30" rows="7"></textarea>
         </div>
+        <div>
+
+         
+           {onclickplus()}
+          
+          
+        </div>
         
       
       <Button color="primary" onClick={()=>OnAdddataClick()}>Add data</Button>
@@ -337,15 +372,15 @@ function StickyHeadTable(props) {
   const bodykim = (
     <div  className={classes.paper}>
       <div>
-      <select ref={addform.product_id}>
-        {product.map((val,index)=>{
+      <select ref={addformkim.product_id}>
+        {prodmodal1.map((val,index)=>{
         return (
           <option value={val.id}>{val.nama}</option>
         )
         })}
           </select>
                  <div>
-                  <select ref={addform.kimia_id}>
+                  <select ref={addformkim.kimia_id} >
                     {prodmodal.map((val,index)=>{
                     return (
                       <option value={val.kimia_id}>{val.kimia_id}</option>
@@ -353,25 +388,9 @@ function StickyHeadTable(props) {
                     })}
                   </select>
                  </div>
-            <input type='text' ref={addformkim.dosis} placeholder='dosis'/>
+            <input type='text' value={addformkim.dosis} onChange={(e)=>onhargachangekim(e)} placeholder='dosis'/>
         </div>
-      <div>
-        {
-          prodmodal.map((val,index)=>{
-            if(index===idproductselect){
-              return(
-                <div>
-                  nama : {val.nama}
-                  <br></br>
-                  dosis : {val.dosis}
-                  <br></br>
-                  Kimia : {val.kimia_id}
-                </div>
-              )
-            }
-            })
-          }
-      </div>
+      
       <Button color="primary" onClick={()=>OnAdddataClickkim()}>Add data</Button>
       <Button color="secondary" onClick={()=>handleClosekim()}>Cancel</Button>
     </div>

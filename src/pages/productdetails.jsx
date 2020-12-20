@@ -98,7 +98,7 @@ return(
                         Nama Obat : {Prod.nama}
                     </div>
                     <div style={{marginBottom:20}}>
-                        Price : {Prod.price}
+                        Price : {priceFormatter(Prod.price)}
                     </div>
                     <div style={{marginBottom:20}}>
                         Description : {Prod.deskripsi}

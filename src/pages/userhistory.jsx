@@ -20,12 +20,8 @@ state = {
 }
 
 componentDidMount(){
-    Axios.get(`${API_URLbe}/transactions`,{
-        params:{
-            status:'completed',
-            user_id:this.props.Auth.id
-        }
-    }).then((res)=>{
+    Axios.get(`${API_URLbe}/trans/getcompleted`)
+    .then((res)=>{
         this.setState({history:res.data})
     })
 }
@@ -40,7 +36,7 @@ dateformat=(n)=>{
 }
 
 todetails=(id)=>{
-    Axios.get(`${API_URLbe}/transactionsdetails?transactions_id=${id}&_expand=product`)
+    Axios.get(`${API_URLbe}/trans/getcompleted`)
     .then((res)=>{
         this.setState({dataselect:res.data,isOpen:true})
     }).catch((err)=>{
